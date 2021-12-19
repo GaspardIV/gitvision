@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: red; height:400px">
+  <div style="background-color: black; height:400px">
     <a-scene>
       <a-entity position="0 0 5">
         <a-camera wasd-controls-enabled=true fov=60 near=0.1 far=10000>
@@ -18,11 +18,11 @@
 import Sphere from "@/components/Sphere";
 
 export default {
-  name: "scene",
+  name: "Scene",
   components: {Sphere},
   data() {
     return {
-      offsetNumbers: [0, 1, -1]
+      offsetNumbers: [0, 1, -1, 10]
     }
   },
 
