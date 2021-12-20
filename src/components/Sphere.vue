@@ -9,7 +9,7 @@ export default {
   props: ['distance'],
   computed: {
     pos() {
-      return `${this.distance} 0 -4`;
+      return `${this.distance} 0.5 -4`;
     }
   },
   data() {
@@ -20,7 +20,8 @@ export default {
   },
   methods: {
     clicked: function () {
-      this.color = "#00FF00"
+      // this.color
+      this.color = "#00FFff"
     }
   }
 }
