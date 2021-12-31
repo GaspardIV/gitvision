@@ -21,7 +21,7 @@ export default {
   methods: {
     clicked: function () {
       // this.color
-      this.color = "#00FFff"
+      this.color = "#bbbccc"
     }
   }
 }
