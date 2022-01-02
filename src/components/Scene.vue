@@ -14,7 +14,6 @@
       <git-log></git-log>
       <Player/>
       <sphere :key="n" v-for="n in offsetNumbers" v-bind:distance="n"></sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
     </a-scene>
   </div>
 </template>
