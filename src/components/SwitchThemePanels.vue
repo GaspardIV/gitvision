@@ -1,7 +1,7 @@
 <template>
-  <a-assets>
-    <img id="sky" src="../assets/Hill_O_Garvock_and_Tullo_Windfarm.jpg"> <!--  heaven theme-->
-  </a-assets>
+<a-assets>
+  <img id="sky" src="../assets/Hill_O_Garvock_and_Tullo_Windfarm.jpg"> <!--  heaven theme-->
+</a-assets>
 
   <a-entity light="type: ambient"></a-entity>
   <a-entity light="type: directional; color: orange; intensity: 0.7; castShadow: true;" position="1 0 -50"></a-entity>
