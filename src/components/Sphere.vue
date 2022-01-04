@@ -1,5 +1,5 @@
 <template>
-  <a-sphere radius=".5" v-bind:color="color" v-bind:position="pos" v-on:click="clicked"></a-sphere>
+  <a-sphere radius=".5" v-bind:color="color" v-bind:position="pos" v-on:click="clicked" shadow="cast: true"></a-sphere>
 </template>
 
 <script>

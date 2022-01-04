@@ -17,7 +17,14 @@
       <git-log></git-log>
       <Player/>
 
-      <a-entity ref="city" scale="2 2 2"></a-entity>
+<!--      <a-entity ref="city" gltf-model="models/Duck/Duck.gltf" scale="2 2 2"></a-entity>-->
+<!--      <a-entity ref="city"  scale="2 2 2"></a-entity>-->
+      <a-entity ref="city" gltf-model="models/Duck/Duck.gltf" scale="2 2 2" shadow="cast: true; receive: true;"></a-entity>
+      <a-entity  gltf-model="models/butterfly2/scene.gltf" scale="0.1 0.1 0.1" position="10 1 0" animation-mixer="" castShadow="true" shadow="cast: true; receive: true;"></a-entity>
+      <a-entity  gltf-model="models/low-poly_falling_astronaut_-_3december/scene.gltf" scale="1 1 1" position="15 0 0" animation-mixer="" shadow="cast: true; receive: true;"></a-entity>
+      <a-entity  gltf-model="models/robot_dog__4kriggedasset/scene.gltf" scale="1 1 1" position="20 0 0" animation-mixer="" shadow="cast: true; receive: true;"></a-entity>
+
+      <a-plane position="0 -1 0" rotation="-90 0 0" width="1000" height="1000" color="white" opacity="0.75" geometry="" material="opacity: 0.71" shadow=""></a-plane>
     </a-scene>
   </div>
 </template>
@@ -31,7 +38,8 @@ export default {
   name: "Scene",
   components: {GitLog, Player, SwitchThemePanels},
   mounted(){
-    this.$refs.city.setAttribute('gltf-model', '#cityModel')
+    // this.$refs.city.setAttribute('gltf-model', '#cityModel')
+    // this.$refs.city.setAttribute('gltf-model', 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf');
   },
   data() {
     return {

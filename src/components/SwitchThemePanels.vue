@@ -2,10 +2,12 @@
 <a-assets>
   <img id="sky" src="../assets/Hill_O_Garvock_and_Tullo_Windfarm.jpg"> <!--  heaven theme-->
 </a-assets>
+  <a-entity light="type: ambient; castShadow:true; intensity: 0.5;"></a-entity>
 
-  <a-entity light="type: ambient"></a-entity>
-  <a-entity light="type: directional; color: orange; intensity: 0.7; castShadow: true;" position="1 0 -50"></a-entity>
-  <a-plane position="0 0 0" rotation="-90 0 0" width="1000" height="1000" color="white" opacity="0.75"></a-plane>
+<!--  TODO LIGHT TYPE SPOT ??? -->
+<!--  <a-entity light="castShadow: true; type: spot; shadowCameraLeft: -10; shadowCameraRight: 10; shadowCameraTop: 10;" position="-1.5 3 -10"></a-entity>-->
+  <a-entity light="castShadow: true; type: directional; shadowCameraLeft: -100; shadowCameraRight: 100; shadowCameraTop: 100;" position="-1.5 3 -10"></a-entity>
+  <a-entity light="castShadow: true; type: directional; shadowCameraLeft: -100; shadowCameraRight: 100; shadowCameraTop: 100;" position="-1.5 0 -10"></a-entity>
   <a-sky src="#sky"></a-sky>
   <wind-farm/>
 
