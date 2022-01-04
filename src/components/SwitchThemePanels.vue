@@ -2,7 +2,7 @@
 <a-assets>
   <img id="sky" src="../assets/Hill_O_Garvock_and_Tullo_Windfarm.jpg"> <!--  heaven theme-->
 </a-assets>
-  <a-entity light="type: ambient; castShadow:true; intensity: 0.5;"></a-entity>
+  <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
 
 <!--  TODO LIGHT TYPE SPOT ??? -->
 <!--  <a-entity light="castShadow: true; type: spot; shadowCameraLeft: -10; shadowCameraRight: 10; shadowCameraTop: 10;" position="-1.5 3 -10"></a-entity>-->
