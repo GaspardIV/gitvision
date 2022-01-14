@@ -9,6 +9,8 @@
   <a-entity light="castShadow: true; type: directional; shadowCameraLeft: -100; shadowCameraRight: 100; shadowCameraTop: 100;" position="-1.5 3 -10"></a-entity>
   <a-entity light="castShadow: true; type: directional; shadowCameraLeft: -100; shadowCameraRight: 100; shadowCameraTop: 100;" position="-1.5 0 -10"></a-entity>
   <a-sky src="#sky" hide-in-ar-mode></a-sky>
+  <a-plane hide-in-ar-mode position="0 -1 0" rotation="-90 0 0" width="1000" height="1000" color="white" opacity="0.75" geometry=""
+           material="opacity: 0.71" shadow=""></a-plane>
   <wind-farm/>
 
 </template>
@@ -19,20 +21,6 @@ export default {
   name: "SwitchThemePanels",
   components: {WindFarm},
   created() {
-    window.AFRAME.registerComponent('hide-in-ar-mode', {
-      // Set this object invisible while in AR mode.
-      init: function () {
-        this.el.sceneEl.addEventListener('enter-vr', () => {
-          this.wasVisible = this.el.getAttribute('visible');
-          if (this.el.sceneEl.is('ar-mode')) {
-            this.el.setAttribute('visible', false);
-          }
-        });
-        this.el.sceneEl.addEventListener('exit-vr', () => {
-          if (this.wasVisible) this.el.setAttribute('visible', true);
-        });
-      }
-    });
   }
 }
 </script>

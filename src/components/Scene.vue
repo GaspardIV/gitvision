@@ -8,10 +8,22 @@
      https://stemkoski.github.io/A-Frame-Examples/keyboard.html-->
 
   <div style="background-color: wheat; height:100vh">
-    <a-scene hit-test>
+    <a-scene hit-test webxr="requiredFeatures: hit-test,local-floor;">
       <a-assets>
         <a-asset-item id="cityModel"
                       src="https://cdn.aframe.io/test-models/models/glTF-2.0/virtualcity/VC.gltf"></a-asset-item>
+      </a-assets>
+      <a-assets>
+        <!-- Model source: https://sketchfab.com/3d-models/spinosaurus-2135501583704537907645bf723685e7
+                 Model author: https://sketchfab.com/VapTor
+                 Model license: CC Attribution -->
+        <a-asset-item id="spinosaurus"
+                      src="https://cdn.glitch.com/324a5290-5aa7-4efc-92d6-ae0736433b12%2Fspinosaurus.glb"
+                      response-type="arraybuffer"></a-asset-item>
+
+        <a-asset-item id="reticle"
+                      src="reticle.gltf"
+                      response-type="arraybuffer"></a-asset-item>
       </a-assets>
       <switch-theme-panels>
       </switch-theme-panels>
@@ -20,10 +32,24 @@
 
       <!--      <a-entity ref="city" gltf-model="models/Duck/Duck.gltf" scale="2 2 2"></a-entity>-->
       <!--      <a-entity ref="city"  scale="2 2 2"></a-entity>-->
-      <!--      <a-entity ref="city" gltf-model="models/Duck/Duck.gltf" scale="2 2 2" shadow="cast: true; receive: true;"></a-entity>-->
-      <!--      <a-entity  gltf-model="models/robot_dog__4kriggedasset/scene.gltf" scale="1 1 1" position="20 0 0" animation-mixer="" shadow="cast: true; receive: true;"></a-entity>-->
-      <a-plane position="0 -1 0" rotation="-90 0 0" width="1000" height="1000" color="white" opacity="0.75" geometry=""
-               material="opacity: 0.71" shadow=""></a-plane>
+<!--            <a-entity ref="city" gltf-model="models/Duck/Duck.gltf" scale="2 2 2" shadow="cast: true; receive: true;" ar-hit-test></a-entity>-->
+<!--            <a-entity  gltf-model="models/robot_dog__4kriggedasset/scene.gltf" scale="1 1 1" position="20 0 0" animation-mixer="" shadow="cast: true; receive: true;"></a-entity>-->
+      <a-entity id="dino" position="-1 0 -3" scale="0.5 0.5 0.5">
+        <a-entity position="0 2.15 0" rotation="0 55 0"
+                  gltf-model="#spinosaurus"
+                  animation-mixer
+                  shadow="cast: true; receive: false"></a-entity>
+
+        <!-- This shadow-receiving plane is only visible in AR mode.-->
+        <a-plane height="30" width="30" rotation="-90 0 0"
+                 shadow="receive: true"
+                 ar-shadows="opacity: 0.2"
+                 visible="false"></a-plane>
+
+      </a-entity>
+      <a-entity   scale="0.03 0.03 0.03" position="0 -0.5 -5" rotation="0 270 0" animation-mixer="" castShadow="true" shadow="cast: true; receive: true;"></a-entity>
+
+      <a-entity gltf-model="models/reticle/reticle.gltf" scale="0.8 0.8 0.8" ar-hit-test></a-entity>
     </a-scene>
   </div>
 </template>
@@ -71,6 +97,116 @@ export default {
       }
 
       scene.addEventListener('newAnchoredEntity', newObject);
+    },
+    attatchHitTest2() {
+
+    },
+    attatchArHelpers() {
+      window.AFRAME.registerComponent('hide-in-ar-mode', {
+        // Set this object invisible while in AR mode.
+        init: function () {
+          this.el.sceneEl.addEventListener('enter-vr', () => {
+            this.wasVisible = this.el.getAttribute('visible');
+            if (this.el.sceneEl.is('ar-mode')) {
+              this.el.setAttribute('visible', false);
+            }
+          });
+          this.el.sceneEl.addEventListener('exit-vr', () => {
+            if (this.wasVisible) this.el.setAttribute('visible', true);
+          });
+        }
+      });
+
+      window.AFRAME.registerComponent('ar-shadows', {
+        // Swap an object's material to a transparent shadows-only material while
+        // in AR mode. Intended for use with a ground plane. The object is also
+        // set visible while in AR mode, this is useful if it's hidden in other
+        // modes due to them using a 3D environment.
+        schema: {
+          opacity: {default: 0.3}
+        },
+        init: function () {
+          this.el.sceneEl.addEventListener('enter-vr', () => {
+            this.wasVisible = this.el.getAttribute('visible');
+            if (this.el.sceneEl.is('ar-mode')) {
+              this.savedMaterial = this.el.object3D.children[0].material;
+              this.el.object3D.children[0].material = new window.THREE.ShadowMaterial();
+              this.el.object3D.children[0].material.opacity = this.data.opacity;
+              this.el.setAttribute('visible', true);
+            }
+          });
+          this.el.sceneEl.addEventListener('exit-vr', () => {
+            if (this.savedMaterial) {
+              this.el.object3D.children[0].material = this.savedMaterial;
+              this.savedMaterial = null;
+            }
+            if (!this.wasVisible) this.el.setAttribute('visible', false);
+          });
+        }
+      });
+
+      window.AFRAME.registerComponent('ar-hit-test', {
+        init: function () {
+          this.xrHitTestSource = null;
+          this.viewerSpace = null;
+          this.refSpace = null;
+
+          this.el.sceneEl.renderer.xr.addEventListener('sessionend', () => {
+            this.viewerSpace = null;
+            this.refSpace = null;
+            this.xrHitTestSource = null;
+          });
+          this.el.sceneEl.renderer.xr.addEventListener('sessionstart', () => {
+            let session = this.el.sceneEl.renderer.xr.getSession();
+
+            let element = this.el;
+            session.addEventListener('select', function () {
+              let position = element.getAttribute('position');
+
+              document.getElementById('dino').setAttribute('position', position);
+              document.getElementById('light').setAttribute('position', {
+                x: (position.x - 2),
+                y: (position.y + 4),
+                z: (position.z + 2)
+              });
+            });
+
+            session.requestReferenceSpace('viewer').then((space) => {
+              this.viewerSpace = space;
+              session.requestHitTestSource({space: this.viewerSpace})
+                  .then((hitTestSource) => {
+                    this.xrHitTestSource = hitTestSource;
+                  });
+            });
+
+            session.requestReferenceSpace('local-floor').then((space) => {
+              this.refSpace = space;
+            });
+          });
+        },
+        tick: function () {
+          if (this.el.sceneEl.is('ar-mode')) {
+            if (!this.viewerSpace) return;
+
+            let frame = this.el.sceneEl.frame;
+            let xrViewerPose = frame.getViewerPose(this.refSpace);
+
+            if (this.xrHitTestSource && xrViewerPose) {
+              let hitTestResults = frame.getHitTestResults(this.xrHitTestSource);
+              if (hitTestResults.length > 0) {
+                let pose = hitTestResults[0].getPose(this.refSpace);
+
+                let inputMat = new window.THREE.Matrix4();
+                inputMat.fromArray(pose.transform.matrix);
+
+                let position = new window.THREE.Vector3();
+                position.setFromMatrixPosition(inputMat);
+                this.el.setAttribute('position', position);
+              }
+            }
+          }
+        }
+      });
     },
     attatchHitTest() {
       window.AFRAME.registerComponent('hit-test', {
@@ -121,9 +257,9 @@ export default {
           this.scene.removeEventListener('xrInitialized', this.xrInitialized);
           this.xrIsInit = true;
           // normalized device coordinates position
-          this.normalizedCoordinatedPositionPointer = new THREE.Vector2();
+          this.normalizedCoordinatedPositionPointer = new window.THREE.Vector2();
           //Screen coordinates normalized to -1..1 (0,0 is at center and 1,1 is at top right)
-          this.coordinatesToFindAnchors = new THREE.Vector2(0.5, 0.5);
+          this.coordinatesToFindAnchors = new window.THREE.Vector2(0.5, 0.5);
           window.addEventListener('touchstart', this.onTouchStart);
 
           if (this.isNotStartedYet) {
@@ -132,7 +268,7 @@ export default {
         },
         realityChanged: function (data) {
           if (data.detail === 'ar') {
-            if (AFRAME.scenes[0].systems.xr.supportAR) {
+            if (window.AFRAME.scenes[0].systems.xr.supportAR) {
               if (this.xrIsInit) {
                 this.start();
               } else {
@@ -159,7 +295,7 @@ export default {
         */
 
         updateFrame: function (data) {
-          var frame = data.detail;
+          // var frame = data.detail;
           if (this.tapData !== null) {
             var x = this.tapData[0];
             var y = this.tapData[1];
@@ -187,8 +323,9 @@ export default {
     }
   },
   created() {
-    this.attatchHitTest();
-    this.hittestTest();
+    this.attatchHitTest2();
+    this.attatchArHelpers();
+    // this.hittestTest();
   }
 
 }
