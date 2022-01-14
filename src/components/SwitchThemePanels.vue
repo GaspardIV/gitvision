@@ -29,7 +29,7 @@ export default {
           }
         });
         this.el.sceneEl.addEventListener('exit-vr', () => {
-          if (this.wasVisible) this.el.setAttribute('visible', false);
+          if (this.wasVisible) this.el.setAttribute('visible', true);
         });
       }
     });
