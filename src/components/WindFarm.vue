@@ -1,5 +1,5 @@
 <template>
-  <a-entity scale="2 2 2" position="-300 -170 350" rotation="0 150 0">
+  <a-entity scale="2 2 2" position="-300 -170 350" rotation="0 150 0" hide-in-ar-mode>
     <a-box depth="3" height="80" width="3" position="0 -0 0"></a-box>
     <a-entity position="0 40 3" scale="2 2 2"
               animation="property: rotation; to: 0 0 360; loop: true; dur: 10000; easing: linear;">
@@ -9,7 +9,7 @@
       <a-box depth="1" height="15" width="1" position="8 -4 0" rotation="0 0 240" color="white"></a-box>
     </a-entity>
   </a-entity>
-  <a-entity scale="2 2 2" position="-240 -170 360" rotation="0 150 0">
+  <a-entity scale="2 2 2" position="-240 -170 360" rotation="0 150 0" hide-in-ar-mode>
     <a-box depth="3" height="80" width="3" position="0 -0 0"></a-box>
     <a-entity position="0 40 3" scale="2 2 2"
               animation="property: rotation; to: 0 0 360; loop: true; dur: 10000; easing: linear;">
