@@ -20,10 +20,6 @@
         <a-asset-item id="spinosaurus"
                       src="https://cdn.glitch.com/324a5290-5aa7-4efc-92d6-ae0736433b12%2Fspinosaurus.glb"
                       response-type="arraybuffer"></a-asset-item>
-
-        <a-asset-item id="reticle"
-                      src="reticle.gltf"
-                      response-type="arraybuffer"></a-asset-item>
       </a-assets>
       <switch-theme-panels>
       </switch-theme-panels>
