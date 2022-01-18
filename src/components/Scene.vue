@@ -18,8 +18,7 @@
                  Model author: https://sketchfab.com/VapTor
                  Model license: CC Attribution -->
         <a-asset-item id="spinosaurus"
-                      src="https://cdn.glitch.com/324a5290-5aa7-4efc-92d6-ae0736433b12%2Fspinosaurus.glb"
-                      response-type="arraybuffer"></a-asset-item>
+                      src="models/spinosaurus/scene.gltf"></a-asset-item>
       </a-assets>
       <switch-theme-panels>
       </switch-theme-panels>
@@ -32,7 +31,7 @@
 <!--            <a-entity  gltf-model="models/robot_dog__4kriggedasset/scene.gltf" scale="1 1 1" position="20 0 0" animation-mixer="" shadow="cast: true; receive: true;"></a-entity>-->
       <a-entity id="dino" position="-1 0 -3" scale="0.5 0.5 0.5">
         <a-entity position="0 2.15 0" rotation="0 55 0"
-                  gltf-model="#spinosaurus"
+                  gltf-model="models/spinosaurus/scene.gltf"
                   animation-mixer
                   shadow="cast: true; receive: false"></a-entity>
 
@@ -43,9 +42,10 @@
                  visible="false"></a-plane>
 
       </a-entity>
+
       <a-entity   scale="0.03 0.03 0.03" position="0 -0.5 -5" rotation="0 270 0" animation-mixer="" castShadow="true" shadow="cast: true; receive: true;"></a-entity>
 
-      <a-entity gltf-model="models/reticle/reticle.gltf" scale="0.8 0.8 0.8" ar-hit-test></a-entity>
+      <a-entity gltf-model="models/spinosaurus/scene.gltf" scale="0.18 0.18 0.18" ar-hit-test></a-entity>
     </a-scene>
   </div>
 </template>
@@ -160,11 +160,11 @@ export default {
               let position = element.getAttribute('position');
 
               document.getElementById('dino').setAttribute('position', position);
-              document.getElementById('light').setAttribute('position', {
-                x: (position.x - 2),
-                y: (position.y + 4),
-                z: (position.z + 2)
-              });
+              // document.getElementById('light').setAttribute('position', {
+              //   x: (position.x - 2),
+              //   y: (position.y + 4),
+              //   z: (position.z + 2)
+              // });
             });
 
             session.requestReferenceSpace('viewer').then((space) => {
