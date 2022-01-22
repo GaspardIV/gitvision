@@ -8,7 +8,7 @@
      https://stemkoski.github.io/A-Frame-Examples/keyboard.html-->
 
   <div style="background-color: wheat; height:100vh">
-    <a-scene hit-test webxr="optionalFeatures: hit-test,local-floor,unbounded;">
+    <a-scene hit-test webxr="optionalFeatures: hit-test,local-floor,local,unbounded;">
       <a-assets>
         <a-asset-item id="cityModel"
                       src="https://cdn.aframe.io/test-models/models/glTF-2.0/virtualcity/VC.gltf"></a-asset-item>
@@ -146,7 +146,7 @@ export default {
                   });
             });
 
-            session.requestReferenceSpace('unbounded').then((space) => {
+            session.requestReferenceSpace('local').then((space) => {
               this.refSpace = space;
             });
           });
