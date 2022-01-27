@@ -8,7 +8,8 @@
      https://stemkoski.github.io/A-Frame-Examples/keyboard.html-->
 
   <div style="background-color: wheat; height:100vh">
-    <a-scene hit-test webxr="optionalFeatures: hit-test,local-floor,local,unbounded;">
+    <!--    <a-scene webxr="requiredFeatures: hit-test,local;">-->
+    <a-scene>
       <a-assets>
         <a-asset-item id="cityModel"
                       src="https://cdn.aframe.io/test-models/models/glTF-2.0/virtualcity/VC.gltf"></a-asset-item>
@@ -25,27 +26,20 @@
       <git-log></git-log>
       <Player/>
 
-      <!--      <a-entity ref="city" gltf-model="models/Duck/Duck.gltf" scale="2 2 2"></a-entity>-->
-      <!--      <a-entity ref="city"  scale="2 2 2"></a-entity>-->
-<!--            <a-entity ref="city" gltf-model="models/Duck/Duck.gltf" scale="2 2 2" shadow="cast: true; receive: true;" ar-hit-test></a-entity>-->
-<!--            <a-entity  gltf-model="models/robot_dog__4kriggedasset/scene.gltf" scale="1 1 1" position="20 0 0" animation-mixer="" shadow="cast: true; receive: true;"></a-entity>-->
-      <a-entity id="dino" position="-1 0 -3" scale="0.05 0.05 0.05">
-        <a-entity position="0 2.15 0" rotation="0 55 0"
-                  gltf-model="models/spinosaurus/scene.gltf"
-                  animation-mixer
-                  shadow="cast: true; receive: false"></a-entity>
+      <!--      <a-entity id="dino" position="-1 0 -3" scale="0.05 0.05 0.05">-->
+      <!--        <a-entity position="0 2.15 0" rotation="0 55 0"-->
+      <!--                  gltf-model="models/spinosaurus/scene.gltf"-->
+      <!--                  animation-mixer-->
+      <!--                  shadow="cast: true; receive: false"></a-entity>-->
+      <!---->
+      <!--         This shadow-receiving plane is only visible in AR mode.-->
+      <!--        <a-plane height="30" width="30" rotation="-90 0 0"-->
+      <!--                 shadow="receive: true"-->
+      <!--                 ar-shadows="opacity: 0.2"-->
+      <!--                 visible="false"></a-plane>-->
+      <!--      </a-entity>-->
+      <!--            <a-entity gltf-model="models/spinosaurus/scene.gltf" scale="0.018 0.018 0.018" ar-hit-test></a-entity>-->
 
-        <!-- This shadow-receiving plane is only visible in AR mode.-->
-        <a-plane height="30" width="30" rotation="-90 0 0"
-                 shadow="receive: true"
-                 ar-shadows="opacity: 0.2"
-                 visible="false"></a-plane>
-
-      </a-entity>
-
-      <a-entity   scale="0.03 0.03 0.03" position="0 -0.5 -5" rotation="0 270 0" animation-mixer="" castShadow="true" shadow="cast: true; receive: true;"></a-entity>
-
-      <a-entity gltf-model="models/spinosaurus/scene.gltf" scale="0.018 0.018 0.018" ar-hit-test></a-entity>
     </a-scene>
   </div>
 </template>
@@ -62,13 +56,12 @@ export default {
     // this.$refs.city.setAttribute('gltf-model', '#cityModel')
     // this.$refs.city.setAttribute('gltf-model', 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf');
   },
-  data() {
-    return {
-      offsetNumbers: [0, 1, -1, 10]
-    }
+  props: {
+    branches: Array,
+    commits: Array,
   },
   methods: {
-    attatchArHelpers() {
+    attatchComponents() {
       window.AFRAME.registerComponent('hide-in-ar-mode', {
         // Set this object invisible while in AR mode.
         init: function () {
@@ -117,11 +110,10 @@ export default {
           this.xrHitTestSource = null;
           this.viewerSpace = null;
           this.refSpace = null;
-
           this.el.sceneEl.renderer.xr.addEventListener('sessionend', () => {
             this.viewerSpace = null;
-            this.refSpace = null;
             this.xrHitTestSource = null;
+            this.refSpace = null;
           });
           this.el.sceneEl.renderer.xr.addEventListener('sessionstart', () => {
             let session = this.el.sceneEl.renderer.xr.getSession();
@@ -147,37 +139,50 @@ export default {
             });
 
             session.requestReferenceSpace('local').then((space) => {
-              this.refSpace = space;
+              this.refSpace = space
+              // this.refSpace =  this.el.sceneEl.renderer.xr.getReferenceSpace();
             });
           });
         },
         tick: function () {
-          if (this.el.sceneEl.is('ar-mode')) {
-            if (!this.viewerSpace) return;
+          // if (this.el.sceneEl.is('ar-mode')) {
+          if (!this.viewerSpace) return;
 
-            let frame = this.el.sceneEl.frame;
-            let xrViewerPose = frame.getViewerPose(this.refSpace);
+          let frame = this.el.sceneEl.frame;
+          // let xrViewerPose = frame.getViewerPose(this.refSpace);
 
-            if (this.xrHitTestSource && xrViewerPose) {
-              let hitTestResults = frame.getHitTestResults(this.xrHitTestSource);
-              if (hitTestResults.length > 0) {
-                let pose = hitTestResults[0].getPose(this.refSpace);
+          if (this.xrHitTestSource /*&& xrViewerPose*/) {
+            let hitTestResults = frame.getHitTestResults(this.xrHitTestSource);
+            if (hitTestResults.length > 0) {
+              console.log(hitTestResults)
+              let pose = hitTestResults[0].getPose(this.refSpace);
 
-                let inputMat = new window.THREE.Matrix4();
-                inputMat.fromArray(pose.transform.matrix);
+              let inputMat = new window.THREE.Matrix4();
+              inputMat.fromArray(pose.transform.matrix);
 
-                let position = new window.THREE.Vector3();
-                position.setFromMatrixPosition(inputMat);
-                this.el.setAttribute('position', position);
-              }
+              // let position = new window.THREE.Vector3();
+              // position.setFromMatrixPosition(inputMat);
+              // this.el.setAttribute('position', position);
+              this.el.matrix = inputMat;
             }
           }
+          // }
         }
       });
+
+      window.AFRAME.registerComponent('look-at', {
+        schema: { type: 'selector' },
+
+        init: function () {},
+
+        tick: function () {
+          this.el.object3D.lookAt(this.data.object3D.position)
+        }
+      })
     },
   },
   created() {
-    this.attatchArHelpers();
+    this.attatchComponents();
   }
 
 }

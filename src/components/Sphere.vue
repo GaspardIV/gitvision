@@ -1,5 +1,9 @@
 <template>
-  <a-sphere radius=".5" v-bind:color="color" v-bind:position="pos" v-on:click="clicked" shadow="cast: true"></a-sphere>
+  <a-entity v-bind:position="pos">
+    <a-sphere radius=".5" v-bind:color="color" v-on:click="clicked"
+              shadow="cast: true"></a-sphere>
+    <a-plane v-if="this.enabled" look-at="#camera" position="-1 0.5 0" rotation="0 45 0" color="#334455"></a-plane>
+  </a-entity>
 </template>
 
 <script>
@@ -14,14 +18,14 @@ export default {
   },
   data() {
     return {
-      color: "#aaa223",
-      offsetNumbers: [0, 1, -1]
+      enabled: false,
+      color: "#aaa223"
     }
   },
   methods: {
     clicked: function () {
-      // this.color
-      this.color = "#bbbccc"
+      this.enabled = !this.enabled
+      this.color = this.enabled? "#aaa223" : "#bbbccc"
     }
   }
 }
