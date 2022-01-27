@@ -23,7 +23,7 @@
       </a-assets>
       <switch-theme-panels>
       </switch-theme-panels>
-      <git-log></git-log>
+      <git-log :commits="this.commits" :branches="this.branches"></git-log>
       <Player/>
 
       <!--      <a-entity id="dino" position="-1 0 -3" scale="0.05 0.05 0.05">-->
@@ -57,8 +57,8 @@ export default {
     // this.$refs.city.setAttribute('gltf-model', 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf');
   },
   props: {
-    branches: Array,
-    commits: Array,
+    branches: [],
+    commits: new Map(),
   },
   methods: {
     attatchComponents() {

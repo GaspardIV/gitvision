@@ -1,10 +1,10 @@
 <template>
   <a-entity position="0 0 0">
 <!--    <a-camera  look-controls wasd-controls-enabled=true wasd-controls="fly: true;" fov=60 preset='hiro' near=0.1 far=1000>-->
-    <a-camera id="camera"  camera-logger comera  look-controls wasd-controls-enabled=true fov=60 preset='hiro' near=0.1 far=1000>
+    <a-camera id="camera"  camera-logger comera  look-controls wasd-controls-enabled="dtrue" fov=60 preset='hiro' near=0.1 far=1000>
 <!--      <a-entity light="type: point;"   position="0 1 0" ></a-entity>-->
       <a-cursor></a-cursor>
-      <a-entity  gltf-model="models/butterfly2/scene.gltf" scale="0.03 0.03 0.03" position="0 -0.5 -5" rotation="0 270 0" animation-mixer="" castShadow="true" shadow="cast: true; receive: true;"></a-entity>
+      <a-entity  gltf-model="models/butterfly2/scene.gltf" scale="0.01 0.01 0.01" position="0 -0.2 -1" rotation="0 270 0" animation-mixer="" castShadow="true" shadow="cast: true; receive: true;"></a-entity>
 <!--      <a-entity cursor raycaster="far: 50; interval: 1000; objects: .clickable"></a-entity>-->
     </a-camera>
     <a-entity ref="help" gltf-model="models/low-poly_falling_astronaut_-_3december/scene.gltf" scale="1 1 1" position="0 0 -15" rotation="320 0 0" animation-mixer="" shadow="cast: true; receive: true;"></a-entity>

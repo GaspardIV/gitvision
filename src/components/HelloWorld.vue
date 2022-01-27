@@ -20,7 +20,7 @@
         <button :class="[owner && repo  ? activeClass : '']" type="submit">ENTER GITVISION</button>
       </form>
     </div>
-    <scene v-else :commits="commits" :branches="branches"></scene>
+    <scene v-else :commits="this.commits" :branches="this.branches"></scene>
   </div>
 </template>
 
