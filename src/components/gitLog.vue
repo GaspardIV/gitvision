@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import ExampleProvider from "@/components/ExampleProvider";
 import Sphere from "@/components/Sphere";
 
 export default {
@@ -15,12 +14,7 @@ export default {
     }
   },
   created() {
-    this.exampleProvider = new ExampleProvider();
-    console.log(this.exampleProvider.getAll())
-    this.data = this.exampleProvider.getAll()
-    // this.exampleProvider.getAll().then((result) => {
-      // this.data = result;
-    // });
+
   }
 }
 </script>

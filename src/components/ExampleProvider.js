@@ -1,20 +1,26 @@
 // import Http from h
 // const API_ROOT = '/your-api-root';
 
-class ExampleProvider {
+import axios from "axios";
 
-    constructor() {
-        // ----------------------
-        // create a http client instance
-        // a good one is https://github.com/mzabriskie/axios
-        // this.http = Http.create();
+class ExampleProvider {
+    owner;
+    repo;
+
+    constructor(owner, repo) {
+        this.owner = owner;
+        this.repo = repo;
     }
 
-    getAll() {
+    async getBranch(branch="master") {
+
+
+        let res = await axios.get(`https://api.github.com/repos/${this.owner}/${this.repo}/commits?sha=${branch}`)
+        console.log(res.data)
         // ----------------------
         // API Call
         // this.getAllDataPromise = this.http.get(API_ROOT);
-        this.getAllDataPromise = [1, 2, 3, 4, 5, 6,7 ,8 , 9];
+        this.getAllDataPromise = res.data;
 
   //       kacperkonecki@Kacpers-Mac-mini ~ % curl \
   // -H "Accept: application/vnd.github.v3+json" \
@@ -31,6 +37,11 @@ class ExampleProvider {
         // ----------------------
         // return promise
         return this.getAllDataPromise;
+    }
+
+    async getAllBranches() {
+        let res = await axios.get(`https://api.github.com/repos/${this.owner}/${this.repo}/branches`)
+        return res.data;
     }
 }
 

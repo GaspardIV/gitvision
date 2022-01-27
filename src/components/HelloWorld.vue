@@ -3,13 +3,19 @@
     <!--    <div class="hello">-->
     <!--      <h1>{{ msg }}</h1>-->
     <!--    </div>-->
-    <div v-if="commits.length===0" class="center" style="height: 100%; width: 100%; background-color: #42b983">
+    <div v-if="!this.done" class="center" style="height: 100%; width: 100%; background-color: #42b983">
       <form @submit.prevent="submitForm">
         <div>
-          github.com/<input  id="owner" type="text" v-model="owner" placeholder="owner" style="width: 73px"
+          github.com/<input id="owner" type="text" v-model="owner" placeholder="owner" style="width: 73px"
                             required
-                            oninput="onKeyPressed(this, 73);" onchange="onKeyPressed(this, 73)" />/<input  id="repo" type="text" v-model="repo" onchange="onKeyPressed(this, 55)" oninput="onKeyPressed(this, 55);"
-                                                                       placeholder="repo" style="width: 55px" required/>
+                            oninput="onKeyPressed(this, 73);" onchange="onKeyPressed(this, 73)"/>/<input id="repo"
+                                                                                                         type="text"
+                                                                                                         v-model="repo"
+                                                                                                         onchange="onKeyPressed(this, 55)"
+                                                                                                         oninput="onKeyPressed(this, 55);"
+                                                                                                         placeholder="repo"
+                                                                                                         style="width: 55px"
+                                                                                                         required/>
         </div>
         <button :class="[owner && repo  ? activeClass : '']" type="submit">ENTER GITVISION</button>
       </form>
@@ -21,6 +27,7 @@
 <script>
 
 import Scene from "@/components/Scene";
+import ExampleProvider from "@/components/ExampleProvider";
 
 
 export default {
@@ -33,8 +40,9 @@ export default {
     return {
       owner: '',
       repo: '',
-      commits: [],
+      commits: new Map(),
       branches: [],
+      done: false,
       activeClass: 'active'
     }
   },
@@ -49,7 +57,18 @@ export default {
     }
   },
   methods: {
-    submitForm() {
+    async submitForm() {
+      this.exampleProvider = new ExampleProvider(this.owner, this.repo);
+      try {
+        this.branches = await this.exampleProvider.getAllBranches()
+        console.log(this.branches)
+        for (let i = 0; i < this.branches.length; i++) {
+          this.commits.set(this.branches[i].name, await this.exampleProvider.getBranch(this.branches[i].name))
+        }
+        this.done = true;
+      } catch (e) {
+        console.log("Something went wrong", e)
+      }
 
       // axios.post('//jsonplaceholder.typicode.com/posts', {
       //   userID: this.userID,
