@@ -1,6 +1,6 @@
 <template>
   <a-entity v-bind:position="pos">
-    <a-sphere radius=".5" v-bind:color="color" v-on:click="clicked"
+    <a-sphere radius=".5" v-bind:color="actcolor" v-on:click="clicked"
               shadow="cast: true"></a-sphere>
     <a-plane v-if="this.enabled" look-at="#camera" position="0 2.5 0" width="5" height="2.2" rotation="0 45 0" color="black" opacity="0.4" transparent="true">
       <a-text value="sha:" position="-2.5 1 0"></a-text>
@@ -17,7 +17,7 @@
 
 export default {
   name: "Sphere",
-  props: ['distance', 'commit'],
+  props: ['distance', 'commit', 'color'],
   computed: {
     pos() {
       return `${2 + 2 *this.distance} -0.3 -4`;
@@ -26,13 +26,13 @@ export default {
   data() {
     return {
       enabled: false,
-      color: "#aaa223"
+      actcolor: this.color
     }
   },
   methods: {
     clicked: function () {
       this.enabled = !this.enabled
-      this.color = this.enabled?  "#bbbccc" : "#aaa223"
+      this.actcolor = this.enabled?  "#bbbccc" : this.color
     }
   }
 }

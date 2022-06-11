@@ -105,7 +105,7 @@ export default {
         }
       });
 
-      window.AFRAME.registerComponent('ar-hit-test', {
+      window.AFRAME.registerComponent('ar-hit-test2', {
         init: function () {
           this.xrHitTestSource = null;
           this.viewerSpace = null;
