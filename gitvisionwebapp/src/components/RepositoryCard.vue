@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <img
-      :src="'https://github.com/' + props.url.split('/')[3] + '.png'"
+      :src="'https://github.com/' + props.url?.split('/')[3] + '.png'"
       width="50"
       height="50"
       alt="repository logo"
@@ -123,8 +123,7 @@ h3 {
 
 
 </style>
-<script setup>
-import { defineProps } from 'vue'
+<script setup lang="ts">
 
 const props = defineProps({
   url: String,
@@ -135,5 +134,5 @@ const props = defineProps({
   notes: String,
   size: String
 })
-console.log(props)
+
 </script>
