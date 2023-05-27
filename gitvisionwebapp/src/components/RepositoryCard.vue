@@ -19,9 +19,10 @@
           </div>
         </div>
         <div class="column">
-          <button class="button is-primary is-small">
-            Explore {{ props.title }} repository in GitVision
-          </button>
+          <router-link :to="'g/' + props.url?.split('/')[3] + '/' + props.url?.split('/')[4]"
+            ><button class="button is-primary is-small">
+              Explore {{ props.title }} repository in GitVision
+            </button></router-link>
         </div>
       </div>
       {{ props.notes }} <br />
@@ -49,7 +50,7 @@ h3 {
   margin-bottom: 0.4rem;
   color: var(--color-heading);
 }
-.item:hover .button{
+.item:hover .button {
   background-color: purple; /* Add this to change background color on hover */
   color: white;
   transform: scale(1.1); /* Add this to slightly increase the size on hover */
@@ -60,7 +61,7 @@ h3 {
   transition: all 0.5s; /* Add this for smooth hover effect */
 }
 .button:hover:active:enabled {
-  background-color: #4CAF50; /* Add this to change background color on hover */
+  background-color: #4caf50; /* Add this to change background color on hover */
   transform: scale(1.4); /* Add this to slightly increase the size on hover */
   cursor: pointer; /* Add this to change cursor on hover */
 }
@@ -120,11 +121,8 @@ h3 {
   justify-content: center;
   align-items: center; /* Add this to center align the button */
 }
-
-
 </style>
 <script setup lang="ts">
-
 const props = defineProps({
   url: String,
   title: String,
@@ -134,5 +132,4 @@ const props = defineProps({
   notes: String,
   size: String
 })
-
 </script>

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host --port 3000",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -12,13 +12,19 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "3d-force-graph": "^1.71.4",
+    "aframe": "^1.4.2",
+    "axios": "^1.4.0",
+    "pako": "^2.1.0",
     "pinia": "^2.0.36",
+    "three": "^0.152.2",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
     "@tsconfig/node18": "^2.0.1",
+    "@types/aframe": "^1.2.2",
     "@types/node": "^18.16.8",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/eslint-config-prettier": "^7.1.0",

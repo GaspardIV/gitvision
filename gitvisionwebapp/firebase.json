@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "gitvis",
     "public": "dist",
     "ignore": [
       "firebase.json",
