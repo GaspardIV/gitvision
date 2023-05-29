@@ -7,7 +7,7 @@ import type { GraphOptionsGui } from '@/graph/GraphOptionsGui'
 import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
 
 export class GraphScene {
-  private camera: Camera = new Camera()
+  private camera: Camera = new THREE.PerspectiveCamera();
   private scene: Scene = new Scene()
   private renderer: WebGLRenderer = new WebGLRenderer()
   private graphOptionsGui: GraphOptionsGui | null = null
@@ -27,9 +27,9 @@ export class GraphScene {
     this.camera = camera
     this.renderer = webGLRenderer
     this.graphOptionsGui = graphOptionsGui
-    this.initSky()
-    this.initCamera()
-    this.setupScene()
+    // this.initSky()
+    // this.initCamera()
+    // this.setupScene()
   }
 
   private setupScene() {

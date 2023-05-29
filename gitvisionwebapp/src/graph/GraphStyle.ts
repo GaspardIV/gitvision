@@ -193,8 +193,10 @@ export class GraphStyle {
   private setParticles() {}
 
   private setActions() {
-    this.graph.onNodeRightClick(this.flyToNode.bind(this))
-    this.graph.onNodeClick(this.onNodeClick.bind(this))
+    console.log('setActions', this.graph)
+
+    // this.graph.onNodeRightClick(this.flyToNode.bind(this))
+    // this.graph.onNodeClick(this.onNodeClick.bind(this))
     // this.graph.onLinkClick(this.onLinkClick.bind(this))
   }
 

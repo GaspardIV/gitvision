@@ -92,8 +92,8 @@ export class GraphForces {
         //   node.fz = (node.topologicalOrder)*5;
         //   node.vz = node.vz -(node.z - node.topologicalOrder)*alpha
         // node.vy = node.vy - (node.y - node.topologicalOrder)*alpha
-        // node.fz = (node.topologicalOrder) * 20;
-        node.fy = node.topologicalOrder * 20
+        node.fy = (node.topologicalOrder) * 10;
+        // node.fy = node.chronologicalOrder * 20
         // node.fy = (node.chronologicalOrder) * 20;
         //fz is first date - last date * 20
         // let date = node.commit.commitTime;
@@ -109,13 +109,13 @@ export class GraphForces {
   }
 
   initOnDragEnd() {
-    this.graph.onNodeDragEnd((node) => {
-      // @ts-ignore
-      node.fx = node.x
-      // node.fy = node.y;
-      // @ts-ignore
-      node.fz = node.z
-    })
+    // this.graph.onNodeDragEnd((node) => {
+    //   // @ts-ignore
+    //   node.fx = node.x
+    //   // node.fy = node.y;
+    //   // @ts-ignore
+    //   node.fz = node.z
+    // })
   }
 
   getChargeStrength() {

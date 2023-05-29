@@ -1,4 +1,5 @@
-import ForceGraph3D from '3d-force-graph'
+import ForceGraph3D from "3d-force-graph";
+import type { ForceGraph3DInstance } from "3d-force-graph"
 import type { ConfigOptions } from '3d-force-graph'
 import { GraphScene } from '@/graph/GraphScene'
 import type { Branch, Tag } from '@/stores/Types'
@@ -29,15 +30,20 @@ export class CommitsGraph {
 
   private graphStyle = new GraphStyle(this.graph, this.graphScene, this.graphData)
 
-  setup(element: HTMLElement) {
-    this.graph = this.graph(element)
-    this.graph.backgroundColor('#00000000')
-    this.graphScene.init(
-      this.graph.scene(),
-      this.graph.camera(),
-      this.graph.renderer(),
-      this.graphOptionsGui
-    )
+  setup(element: ForceGraph3DInstance) {
+    console.log('setup', element)
+    this.graph = element
+    this.graphForces = new GraphForces(this.graph)
+    this.graphOptionsGui = GraphOptionsGui.getInstance(this.graphForces, this.graphScene)
+    this.graphStyle = new GraphStyle(this.graph, this.graphScene, this.graphData)
+    // this.graphScene = new GraphScene()
+    // this.graph.backgroundColor('#00000000')
+    // this.graphScene.init(
+    //   this.graph.scene(),
+    //   this.graph.camera(),
+    //   this.graph.renderer(),
+    //   this.graphOptionsGui
+    // )
 
     // const controls = new FlyControls(this.camera, this.renderer.domElement);
     // controls.movementSpeed = 100;
@@ -45,15 +51,16 @@ export class CommitsGraph {
     // controls.rollSpeed = Math.PI / 24;
     // controls.autoForward = false;
     // controls.dragToLook = true;
-    this.graph.controls().movementSpeed = 10000
-    this.graph.controls().rollSpeed = Math.PI / 4
-    this.graph.controls().autoForward = false
-    this.graph.controls().dragToLook = true
-    // this.graph.controls().domElement = this.graph.renderer().domElement;
-    this.graph.controls().enabled = true
+    // this.graph.controls().movementSpeed = 10000
+    // this.graph.controls().rollSpeed = Math.PI / 4
+    // this.graph.controls().autoForward = false
+    // this.graph.controls().dragToLook = true
+    // // this.graph.controls().domElement = this.graph.renderer().domElement;
+    // this.graph.controls().enabled = true
   }
 
   updateWithData(commits: Commit[], branches: Branch[], tags: Tag[]) {
+    console.log('updateWithData', commits, branches, tags)
     const gData = this.graphData.updateData(commits, branches, tags)
     this.graphForces.updateGraph()
     this.graphStyle.update()
