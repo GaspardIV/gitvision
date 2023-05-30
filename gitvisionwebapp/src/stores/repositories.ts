@@ -14,16 +14,16 @@ export const useRepoStore = defineStore('repositories', () => {
         'This repo provides a great example of a large, complex open-source project with a very active community.',
       assetPath: '/public/tensorflow.json'
     },
-    {
-      url: 'https://github.com/torvalds/linux',
-      title: 'Linux',
-      description: 'The Linux kernel by Linus Torvalds.',
-      size: 'Large',
-      branchingStrategy: 'Unique',
-      notes:
-        'This repo provides an excellent perspective on how an extensive and long-standing project operates.',
-      assetPath: '/public/linux.json'
-    },
+    // {
+    //   url: 'https://github.com/torvalds/linux',
+    //   title: 'Linux',
+    //   description: 'The Linux kernel by Linus Torvalds.',
+    //   size: 'Large',
+    //   branchingStrategy: 'Unique',
+    //   notes:
+    //     'This repo provides an excellent perspective on how an extensive and long-standing project operates.',
+    //   assetPath: '/public/linux.json'
+    // },
     {
       url: 'https://github.com/WordPress/WordPress',
       title: 'WordPress',

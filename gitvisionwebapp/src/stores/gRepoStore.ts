@@ -24,18 +24,27 @@ export const useGRepoStore = defineStore("grepo", () => {
 
   async function readCommitsFromFile(singleFileMode = false) {
     if (singleFileMode) {
-      const name = "https://gitvis.web.app/repos/express.json.gz";
-      console.log(name, FILE_NAME.value);
-      const data = await axios.get(FILE_NAME.value)//, {decompress: true });
-      console.log(data);
-      console.log(data.data);
-      // let data2 = pako.inflate(data.data);
-      // data2 = JSON.parse(new TextDecoder("utf-8").decode(data2));
-      // console.log(data2);
+      const data = await axios.get(FILE_NAME.value, {
+        responseType: "arraybuffer",
+        decompress: false
+      });
+
+
       // @ts-ignore
-      processData(data);
+      console.log("xdd", data);
+      let data2;
+      try {
+        data2 = pako.inflate(data.data);
+        data2 = JSON.parse(new TextDecoder("utf-8").decode(data2));
+      }
+      catch (e) {
+        console.log(e);
+        data2 = JSON.parse(new TextDecoder().decode(data.data));
+      }
       // @ts-ignore
-      processCommits(data.data.commits);
+      processData({ data: data2 });
+      // @ts-ignore
+      processCommits(data2.commits);
     } else {
       const data = await axios.get(
         FILE_NAME.value.replace(".json.gz", "_branches_and_tags.json.gz"),
