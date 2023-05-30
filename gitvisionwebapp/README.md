@@ -1,5 +1,3 @@
-Certainly, here's a revised version of your GitHub repository description:
-
 # GitVision WebApp
 
 GitVision is a groundbreaking web tool that transforms Git repositories into immersive 3D, Virtual, and Augmented reality visualizations. Developed with Vue 3 in Vite, it provides a novel approach to understanding Git's version control system, making it more intuitive, efficient, and engaging.
