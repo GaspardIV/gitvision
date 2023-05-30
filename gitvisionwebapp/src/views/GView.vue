@@ -31,10 +31,9 @@ window.hoverNode = (node: any) => {
     // @ts-ignore
     tooltip.querySelector('#time').textContent += ' (' + timeSinceCommit + ' ago)';
     // @ts-ignore
-    tooltip.querySelector("#page").setAttribute("style", "display: block");
+    tooltip.setAttribute("visible", true);
   } else {
-    // @ts-ignore
-    tooltip.querySelector("#page").setAttribute("style", "display: none");
+    tooltip.setAttribute("visible", false);
   }
 };
 const fillGraphData = () => {
@@ -116,18 +115,11 @@ onMounted(() => {
   if (AFRAME.components.foo) delete AFRAME.components.foo;
   AFRAME.registerComponent("foo", {
     init: function() {
-      // setTimeout(() => {
       // @ts-ignore
         commitsGraph.setup(this.el.components.forcegraph.forceGraph);
-        // window.hoverNode(null);
         if (repo.commits) {
           fillGraphData();
         }
-        setTimeout(() => {
-          // @ts-ignore
-          window.hoverNode(null);
-        }, 1);
-      // }, 1000);
     }
   });
 });
@@ -162,7 +154,7 @@ onUnmounted(() => {
         far="100000"
         look-controls="pointerLockEnabled: true">
         <a-cursor color="lavender" opacity="0.5" raycaster="objects: [forcegraph]">
-          <a-entity id="forcegraph-tooltip" position="0 -0.9 -1" htmlembed>
+          <a-entity id="forcegraph-tooltip" position="0 -0.9 -1" htmlembed visible="false" >
             <div id="page" class="screen dark main">
               <div class="time-section">
                 <p><span class="label"></span> <span class="data" id="time"></span></p>

@@ -4,7 +4,6 @@
   max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
-
   font-weight: normal;
   height: 100%;
   overflow: auto;
@@ -55,43 +54,43 @@ a,
 
 
 .dark{
-  background-color: rgba(0,0,0,0.2);
-  border-radius:50px;
-  background-repeat: no-repeat;
-  background-position: bottom right;
-  padding: 20px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 1em;
+  background: #333333;
+  border-top: 5px solid #ffffff55;
+  color: white;
 }
 
 .main{
   width: 450px;
   height: 170px;
-  /*height: fit-content;*/
   overflow: hidden;
 }
 
 .info-section {
-  color: #00ff00;
+  color: cyan;
 }
 
 .message-section {
   clear: both;
   font-weight: bolder;
-  /*text-align: center;*/
-  color: white;
+  color: magenta;
 }
 
 .time-section {
   float: right;
-  color: yellow;
+  color: white;
 }
 
 .sha-section {
-  float: right;
-  /*color: #00ff00;*/
+  color: snow;
 }
 
 .label {
   font-weight: bold;
+  color: white;
 }
 
 .data {

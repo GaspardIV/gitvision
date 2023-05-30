@@ -67,6 +67,7 @@ export class CommitsGraph {
       tagEl.setAttribute("tag", tag.commitId);
       tagEl.setAttribute("scale", "10 10 10");
       tagEl.setAttribute("side", "double");
+      tagEl.setAttribute("color", "green");
       tagEl.setAttribute("align", "center");
       tagEl.setAttribute("baseline", "bottom");
       tagEl.setAttribute("width", "100");
