@@ -1,5 +1,4 @@
 import type { GraphForces } from '@/graph/GraphForces'
-import type { GraphScene } from '@/graph/GraphScene'
 import GUI from 'lil-gui'
 
 export class GraphOptionsGui {

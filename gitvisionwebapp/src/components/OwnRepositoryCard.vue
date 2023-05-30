@@ -21,17 +21,20 @@
 
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
+
 import { ref } from "vue";
 import pako from "pako";
 import { useGRepoStore } from "@/stores/gRepoStore";
-import axios from "axios";
 
 const fileName= ref("")
+
+// @ts-ignore
 const fileInputChanged = (event) => {
   const file = event.target.files[0];
   const reader = new FileReader();
   reader.onload = (e) => {
+    // @ts-ignore
     const compressed = new Uint8Array(e.target.result);
     const decompressed = pako.inflate(compressed);
     const text = new TextDecoder("utf-8").decode(decompressed);

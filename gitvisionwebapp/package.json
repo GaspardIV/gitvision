@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
+    "@types/pako": "^2.0.0",
     "@tsconfig/node18": "^2.0.1",
     "@types/aframe": "^1.2.2",
     "@types/node": "^18.16.8",

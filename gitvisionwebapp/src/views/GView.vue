@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, onUpdated, ref, watch } from "vue";
+import { onMounted, onUnmounted, onUpdated, watch } from "vue";
 import "aframe";
 import "aframe-extras";
 import "aframe-htmlembed-component";
@@ -16,16 +16,24 @@ window.hoverNode = (node: any) => {
   let tooltip = document.querySelector("#forcegraph-tooltip");
   if (node) {
     let commit = node.commit;
+    // @ts-ignore
     tooltip.querySelector("#author").textContent = commit.author + " (" + commit.authorMail + ")";
+    // @ts-ignore
     tooltip.querySelector("#committer").textContent = commit.committer + " (" + commit.committerMail + ")";
+    // @ts-ignore
     tooltip.querySelector("#ID").textContent = commit.id;
+    // @ts-ignore
     tooltip.querySelector("#short").textContent = commit.short;
     let commitTime = commit.time;
     let timeSinceCommit = timeSince(commitTime);
+    // @ts-ignore
     tooltip.querySelector('#time').textContent = `${commitTime.toLocaleString()}`;
+    // @ts-ignore
     tooltip.querySelector('#time').textContent += ' (' + timeSinceCommit + ' ago)';
+    // @ts-ignore
     tooltip.querySelector("#page").setAttribute("style", "display: block");
   } else {
+    // @ts-ignore
     tooltip.querySelector("#page").setAttribute("style", "display: none");
   }
 };
@@ -40,6 +48,7 @@ function updateTagPosition(el: Entity, commitId: any) {
   if (position) {
     el.setAttribute("position", position);
   } else {
+    // @ts-ignore
     el.parentNode.removeChild(el);
   }
 }
@@ -49,12 +58,14 @@ function updateBranchPosition(el: Entity, commitId: any) {
   if (position) {
     el.setAttribute("position", position);
   } else {
+    // @ts-ignore
     el.parentNode.removeChild(el);
   }
 }
-
+// @ts-ignore
 function timeSince(date) {
 
+  // @ts-ignore
   let seconds = Math.floor((new Date() - date) / 1000);
 
   let interval = seconds / 31536000;
@@ -106,6 +117,7 @@ onMounted(() => {
   AFRAME.registerComponent("foo", {
     init: function() {
       // setTimeout(() => {
+      // @ts-ignore
         commitsGraph.setup(this.el.components.forcegraph.forceGraph);
         // window.hoverNode(null);
         if (repo.commits) {
@@ -171,8 +183,7 @@ onUnmounted(() => {
       </a-camera>
     </a-entity>
     <a-entity forcegraph="on-node-hover: hoverNode" foo></a-entity>
-    <div id="enter-ar" hidden="">
-    </div>
+    <div id="enter-ar" hidden></div>
   </a-scene>
 </template>
 

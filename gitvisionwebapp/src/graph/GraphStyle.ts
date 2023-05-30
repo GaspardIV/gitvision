@@ -1,12 +1,8 @@
 import type { ForceGraph3DGenericInstance, ForceGraph3DInstance } from '3d-force-graph'
 import type { CommitNode, GraphData } from '@/graph/GraphData'
-import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer'
-import * as d3 from 'd3'
-import { THREE } from 'aframe'
-import { CullFaceNone, MeshBasicMaterial, MeshLambertMaterial } from 'three'
+
+import { MeshBasicMaterial } from 'three'
 import { GraphOptionsGui } from '@/graph/GraphOptionsGui'
-import { CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
 export class GraphStyle {
   private highlightNodes = new Set()
@@ -24,33 +20,6 @@ export class GraphStyle {
     private graphData: GraphData
   ) {}
 
-  timeSince(date) {
-    const seconds = Math.floor((new Date() - date) / 1000)
-
-    let interval = seconds / 31536000
-
-    if (interval > 1) {
-      return Math.floor(interval) + ' years'
-    }
-    interval = seconds / 2592000
-    if (interval > 1) {
-      return Math.floor(interval) + ' months'
-    }
-    interval = seconds / 86400
-    if (interval > 1) {
-      return Math.floor(interval) + ' days'
-    }
-    interval = seconds / 3600
-    if (interval > 1) {
-      return Math.floor(interval) + ' hours'
-    }
-    interval = seconds / 60
-    if (interval > 1) {
-      return Math.floor(interval) + ' minutes'
-    }
-    return Math.floor(seconds) + ' seconds'
-  }
-
   setNodesObjects() {
     this.graph
       .nodeRelSize(this.optionsNodeSize)
@@ -66,10 +35,13 @@ export class GraphStyle {
         if (this.hoverNode == node) {
           return 'white'
         }
+        // @ts-ignore
         return node.color
       } else if (this.highlightNodes.size > 0) {
+        // @ts-ignore
         return node.color.replace('rgb', 'rgba').replace(')', ', 0.2)')
       } else {
+        // @ts-ignore
         return node.color.replace('rgb', 'rgba').replace(')', ', 0.8)')
       }
     })
@@ -80,26 +52,34 @@ export class GraphStyle {
     this.graph.linkMaterial((link) => {
       // @ts-ignore
       if (this.highlightLinks.has(link)) {
+
         return new MeshBasicMaterial({
+          // @ts-ignore
           color: link.color,
           transparent: true,
           opacity: 1
         })
-      } else if (this.highlightNodes.size > 0 || true) {
+        // @ts-ignore next-line
+      // @ts-nocheck
+      } else if (this.highlightNodes.size > 0 || true) { // @ts-ignore
         return new MeshBasicMaterial({
+          // @ts-ignore
           color: link.color,
           transparent: true,
           opacity: 0.3
         })
       } else {
         // const opacity =  (link.target.chronologicalOrder - link.source.chronologicalOrder) / nodesCount;
+        // @ts-ignore
         const sourceOrder = this.graphData.commitIdToNodeMap.get(link.source).chronologicalOrder
+        // @ts-ignore
         const targetOrder = this.graphData.commitIdToNodeMap.get(link.target).chronologicalOrder
         let opacity = 1 - (targetOrder - sourceOrder) / (nodesCount / 3)
         opacity = Math.max(0.2, opacity)
         // console.log(opacity)
         // const opacity = node.chronologicalOrder / this.graph.getNodesCount();
         return new MeshBasicMaterial({
+          // @ts-ignore
           color: link.color,
           transparent: true,
           opacity: opacity
@@ -140,6 +120,7 @@ export class GraphStyle {
 
     // @ts-ignore
     const newPos =
+      // @ts-ignore
       node.x || node.y || node.z
         ? // @ts-ignore
           { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
@@ -195,9 +176,12 @@ export class GraphStyle {
         this.highlightNodes.add(node1)
         // @ts-ignore
         if (node1.firstParent) {
+          // @ts-ignore
           queue.push(node1.firstParent)
         }
+        // @ts-ignore
         if (node1.firstChild) {
+          // @ts-ignore
           queue.push(node1.firstChild)
         }
       }

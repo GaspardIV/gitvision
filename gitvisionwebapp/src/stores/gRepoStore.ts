@@ -3,6 +3,7 @@ import type { Ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 import { Commit, Tag, Branch } from "@/stores/Types";
+import pako from "pako";
 
 
 export const useGRepoStore = defineStore("grepo", () => {
@@ -23,9 +24,17 @@ export const useGRepoStore = defineStore("grepo", () => {
 
   async function readCommitsFromFile(singleFileMode = false) {
     if (singleFileMode) {
-      const data = await axios.get(FILE_NAME.value, { decompress: true });
+      const name = "https://gitvis.web.app/repos/express.json.gz";
+      console.log(name, FILE_NAME.value);
+      const data = await axios.get(FILE_NAME.value)//, {decompress: true });
       console.log(data);
+      console.log(data.data);
+      // let data2 = pako.inflate(data.data);
+      // data2 = JSON.parse(new TextDecoder("utf-8").decode(data2));
+      // console.log(data2);
+      // @ts-ignore
       processData(data);
+      // @ts-ignore
       processCommits(data.data.commits);
     } else {
       const data = await axios.get(
@@ -68,7 +77,7 @@ export const useGRepoStore = defineStore("grepo", () => {
 
   function processData(data: { data: { branches: any[], tags: any[] } }) {
     const { branches: dataBranches, tags: dataTags } = data.data;
-
+    console.log(dataBranches, "why it's not iterable");
     for (const branch of dataBranches) {
       branches.value.push(
         new Branch(

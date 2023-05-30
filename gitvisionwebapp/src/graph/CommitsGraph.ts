@@ -101,12 +101,14 @@ export class CommitsGraph {
   getNodeTagPosition(commitId: any) {
     const node = this.graphData.commitIdToNodeMap.get(commitId);
     if (!node) return "";
+    // @ts-ignore
     return `${node.x} ${node.y + 20} ${node.z}`;
   }
 
   getNodeBranchPosition(commitId: any) {
     const node = this.graphData.commitIdToNodeMap.get(commitId);
     if (!node) return "";
+    // @ts-ignore
     return `${node.x} ${node.y + 100} ${node.z}`;
   }
 

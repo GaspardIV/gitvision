@@ -55,6 +55,7 @@ export class GraphForces {
       const k = -0.005 * alpha //alpha * (this.centerStrength+ 0.1) * 5; // Control the strength of the force
 
       this.graph.graphData().nodes.forEach((node) => {
+        // @ts-ignore
         const scale = node.topologicalOrder / this.graph.graphData().nodes.length
         // const scale = node.topologicalOrder / this.graph.graphData().nodes.length;
         // @ts-ignore

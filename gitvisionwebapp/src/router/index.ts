@@ -29,7 +29,7 @@ router.beforeResolve(async (to) => {
     const repoStore = useGRepoStore();
     if (to.name === "own") {
       try {
-        await repoStore.loadRepoData("own.json.gz", true);
+        await repoStore.loadRepoData("own", true);
       } catch (e) {
         console.log(e);
       }
