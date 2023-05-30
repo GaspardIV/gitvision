@@ -1,11 +1,12 @@
 import type { ForceGraph3DGenericInstance, ForceGraph3DInstance } from '3d-force-graph'
-import type { GraphScene } from '@/graph/GraphScene'
 import type { CommitNode, GraphData } from '@/graph/GraphData'
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer'
 import * as d3 from 'd3'
 import { THREE } from 'aframe'
 import { CullFaceNone, MeshBasicMaterial, MeshLambertMaterial } from 'three'
 import { GraphOptionsGui } from '@/graph/GraphOptionsGui'
+import { CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 
 export class GraphStyle {
   private highlightNodes = new Set()
@@ -20,7 +21,6 @@ export class GraphStyle {
 
   constructor(
     private graph: ForceGraph3DGenericInstance<ForceGraph3DInstance>,
-    private graphScene: GraphScene,
     private graphData: GraphData
   ) {}
 
@@ -53,79 +53,9 @@ export class GraphStyle {
 
   setNodesObjects() {
     this.graph
-      // @ts-ignore
-      .nodeThreeObject((node) => {
-        // is close to camera position
-        // const isCloseToCamera = this.graphScene.isCloseToCamera({x: node.x, y: node.y, z: node.z});
-        const nodeEl = document.createElement('div')
-        // if (node.commit.tag) {
-        //   const shortMessage = document.createElement("p");
-        //   shortMessage.textContent = node.commit.tag;
-        //   shortMessage.style.color = node.color;
-        //   nodeEl.appendChild(shortMessage);
-        // }
-        const shortSha = node.id.toString().substring(0, 7)
-        if (
-          (this.highlightNodes.has(node) && (this.ultraMode || this.hoverNode == node)) ||
-          (node.commit.branch && this.graphOptionsGui?.settings.enableShowBranches) ||
-          (node.commit.tag && this.graphOptionsGui?.settings.enableShowTags)
-        ) {
-          nodeEl.textContent = shortSha + '   ' + node.commit.committer // node.commit.short;
-          if (node.commit.branch && this.graphOptionsGui?.settings.enableShowBranches) {
-            nodeEl.textContent = node.commit.branch + ' -> ' + node.commit.committer
-            nodeEl.className = 'branch'
-          }
-          const shortMessage = document.createElement('p')
-          shortMessage.textContent =
-            node.commit.short + ' ' + node.topologicalOrder + ' ' + node.chronologicalOrder
-          shortMessage.style.color = 'white'
-          if (node.commit.tag && this.graphOptionsGui?.settings.enableShowTags) {
-            shortMessage.className = 'tag'
-          }
-          nodeEl.appendChild(shortMessage)
-          const date = document.createElement('p')
-          date.textContent = this.timeSince(node.commit.time)
-          date.className = 'date'
-          nodeEl.appendChild(date)
-          if (!nodeEl.className) {
-            nodeEl.className = 'node-label'
-          }
-          if (this.hoverNode == node) {
-            nodeEl.style.color = 'magenta'
-            nodeEl.style.textShadow = 'text-shadow: 2px 2px black'
-            // nodeEl.style.fontSize = "8px";
-          }
-          // nodeEl.addEventListener(
-          nodeEl.addEventListener('click', (e) => {
-            this.onNodeClick(node)
-            this.flyToNode(node)
-          })
-          // nodeEl.className = "node-label";
-          const res = new CSS2DObject(nodeEl)
-          res.position.set(30, 40, 0)
-          return res
-        } else if (this.highlightNodes.size > 0) {
-          return null
-        } else if (this.graphOptionsGui?.settings.enableShowCommits) {
-          /*if (this.clickHighlightNodes.has(node)) {*/ nodeEl.textContent = shortSha // node.commit.short;
-          nodeEl.style.color = node.color.replace('rgba', 'rgba').replace(', 0.6)', ')')
-          nodeEl.style.textShadow = 'text-shadow: 2px 2px black'
-          nodeEl.style.fontSize = '10px'
-          // nodeEl.addEventListener(
-          nodeEl.addEventListener('click', (e) => {
-            this.onNodeClick(node)
-            this.flyToNode(node)
-          })
-          // nodeEl.className = "node-label";
-          const res = new CSS2DObject(nodeEl)
-          res.position.set(0, 10, 0)
-          return res
-        }
-      })
-      .nodeThreeObjectExtend(true)
       .nodeRelSize(this.optionsNodeSize)
       .nodeOpacity(1)
-
+    this.graph.refresh()
     this.graph
       .linkWidth((link) => (this.highlightLinks.has(link) ? 4 : 0))
       .linkDirectionalParticles((link) => (this.highlightLinks.has(link) ? 4 : 0))
@@ -155,7 +85,7 @@ export class GraphStyle {
           transparent: true,
           opacity: 1
         })
-      } else if (this.highlightNodes.size > 0) {
+      } else if (this.highlightNodes.size > 0 || true) {
         return new MeshBasicMaterial({
           color: link.color,
           transparent: true,
@@ -184,6 +114,7 @@ export class GraphStyle {
     this.setArrows()
     this.setParticles()
     this.setActions()
+    this.graph.refresh()
   }
 
   private setArrows() {

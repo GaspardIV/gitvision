@@ -26,9 +26,9 @@ export type CommitsLink = {
 }
 
 export class GraphData {
-  private commits: Commit[] = []
-  private branches: Branch[] = []
-  private tags: Tag[] = []
+  public commits: Commit[] = []
+  public branches: Branch[] = []
+  public tags: Tag[] = []
 
   private commitNodes: CommitNode[] = []
 

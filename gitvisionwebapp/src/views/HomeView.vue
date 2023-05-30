@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import RepositoriesList from '../components/RepositoriesList.vue'
-import HeaderView from '@/components/HeaderView.vue'
+import RepositoriesList from "../components/RepositoriesList.vue";
+import HeaderView from "@/components/HeaderView.vue";
 </script>
 
 <template>
@@ -29,3 +29,18 @@ import HeaderView from '@/components/HeaderView.vue'
     </h3>
   </footer>
 </template>
+
+<style lang="css">
+body {
+  overflow: auto !important;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+</style>

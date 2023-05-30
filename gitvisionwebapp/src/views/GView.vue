@@ -5,6 +5,8 @@ import "aframe-extras";
 import { useGRepoStore } from "@/stores/gRepoStore";
 
 import { CommitsGraph } from "@/graph/CommitsGraph";
+import { CSS2DObject, CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer";
+import type { Entity, ObjectMap } from "aframe";
 
 const repo = useGRepoStore();
 const element = ref();
@@ -13,19 +15,54 @@ const commitsGraph = new CommitsGraph();
 
 const fillGraphData = () => {
   commitsGraph.updateWithData(repo.commits, repo.branches, repo.tags);
+  const sceneEl = document.querySelector("a-scene");
+  setTimeout(() => commitsGraph.initTagsAndBranches(sceneEl), 2000);
 };
 
+function updateTagPosition(el: Entity, commitId: any) {
+  const position = commitsGraph.getNodeTagPosition(commitId);
+  if (position) {
+    el.setAttribute("position", position);
+  } else {
+    el.parentNode.removeChild(el);
+  }
+}
+
+function updateBranchPosition(el: Entity, commitId: any) {
+  const position = commitsGraph.getNodeBranchPosition(commitId);
+  if (position) {
+    el.setAttribute("position", position);
+  } else {
+    el.parentNode.removeChild(el);
+  }
+}
 
 onMounted(() => {
+  if (AFRAME.components.tag) delete AFRAME.components.tag;
+  AFRAME.registerComponent("tag", {
+    tick(time: number, timeDelta: number) {
+      const el = this.el;
+      const commitId = this.data;
+      updateTagPosition(el, commitId);
+    }
+  });
+
+  if (AFRAME.components.branch) delete AFRAME.components.branch;
+  AFRAME.registerComponent("branch", {
+    tick(time: number, timeDelta: number) {
+      const el = this.el;
+      const commitId = this.data;
+      updateBranchPosition(el, commitId);
+    }
+  });
+
+  if (AFRAME.components.foo) delete AFRAME.components.foo;
   AFRAME.registerComponent("foo", {
     init: function() {
       setTimeout(() => {
-        var allObjects = this.el.sceneEl.object3D.children;
-        console.log("allObjects", this.el.components.forcegraph.forceGraph);
         commitsGraph.setup(this.el.components.forcegraph.forceGraph);
         if (repo.commits) {
           fillGraphData();
-          console.log("filling graph data", repo.commits);
         }
       }, 1000);
     }
@@ -36,13 +73,16 @@ watch(repo.commits, fillGraphData);
 onUpdated(fillGraphData);
 onUnmounted(() => {
   delete AFRAME.components.foo;
+  delete AFRAME.components.tag;
 });
+
 </script>
 
 <template>
   <a-scene stats class="graph" fog="type: linear; color: #000; near:1; far: 100000"
            vr-mode-ui=" enterARButton: #enter-ar">
     <a-entity id="rig"
+              rotation="0 270 0"
               movement-controls="camera: #camera; constrainToNavMesh: true; fly: true; speed: 205.5;"
               position="25 0 25">
       <a-entity cursor="rayOrigin: mouse; mouseCursorStylesEnabled: true;"
@@ -58,7 +98,7 @@ onUnmounted(() => {
         far="100000"
         look-controls="pointerLockEnabled: true">
 
-         <a-cursor color="lavender" opacity="0.5" raycaster="objects: [forcegraph]"></a-cursor>
+        <a-cursor color="lavender" opacity="0.5" raycaster="objects: [forcegraph]"></a-cursor>
         <a-text
           id="forcegraph-tooltip"
           position="0 -0.25 -1"
@@ -71,22 +111,15 @@ onUnmounted(() => {
     <a-entity forcegraph="
       on-node-hover: node => document.querySelector('#forcegraph-tooltip').setAttribute('value', node ? node.commit.short : '');"
               foo
+              position="0 0 0"
     >
     </a-entity>
     <div id="enter-ar" hidden="">
     </div>
   </a-scene>
-
-
-  <!--  <div id="dom-overlay">-->
-  <!--    <h1>-->
-  <!--      GitVision-->
-  <!--    </h1>-->
-  <!--    <div id="dom-overlay-message">Enter AR to start.</div>-->
-  <!--  </div>-->
 </template>
 
-<style>
+<style scoped>
 .graph {
   width: 100%;
   height: 100%;

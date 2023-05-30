@@ -24,6 +24,7 @@ export const useGRepoStore = defineStore("grepo", () => {
   async function readCommitsFromFile(singleFileMode = false) {
     if (singleFileMode) {
       const data = await axios.get(FILE_NAME.value, { decompress: true });
+      console.log(data);
       processData(data);
       processCommits(data.data.commits);
     } else {
@@ -80,14 +81,15 @@ export const useGRepoStore = defineStore("grepo", () => {
     }
 
     for (const tag of dataTags) {
+      console.log(tag);
       tags.value.push(
-        new Tag(tag.name, tag.name, tag.commitId, tag.commitMessage, new Date(tag.commitTime * 1000))
+        new Tag(tag.name, tag.commitId, tag.name, tag.commitMessage, new Date(tag.commitTime * 1000))
       );
     }
   }
 
   function processCommits(data: any[]) {
-    for (const commit of data.slice(-3000)) {
+    for (const commit of data.slice(-2000)) {
       commits.value.push(
         new Commit(
           commit.author_name,

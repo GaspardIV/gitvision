@@ -24,14 +24,14 @@ export class GraphOptionsGui {
   // singleton
   private static instance: GraphOptionsGui
   private onStyleChangeCallback = false
-  static getInstance(graphForces: GraphForces, graphScene: GraphScene): GraphOptionsGui {
+  static getInstance(graphForces: GraphForces): GraphOptionsGui {
     if (!GraphOptionsGui.instance) {
-      GraphOptionsGui.instance = new GraphOptionsGui(graphForces, graphScene)
+      GraphOptionsGui.instance = new GraphOptionsGui(graphForces)
     }
     return GraphOptionsGui.instance
   }
 
-  private constructor(private graphForces: GraphForces, private graphScene: GraphScene) {
+  private constructor(private graphForces: GraphForces) {
     this.settings.charge = graphForces.getChargeStrength()
     this.settings.link = graphForces.getLinkStrength()
     this.settings.centerStrength = graphForces.getCenterStrength()

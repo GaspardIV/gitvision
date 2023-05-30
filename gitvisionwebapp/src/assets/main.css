@@ -6,6 +6,32 @@
   padding: 2rem;
 
   font-weight: normal;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Designing for scroll-bar */
+::-webkit-scrollbar {
+  position: absolute;
+  right: 0;
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: purple;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 a,
