@@ -5,7 +5,7 @@ GitVision is a groundbreaking web tool that transforms Git repositories into imm
 Experience the live demo of GitVision at [gitvis.web.app](https://gitvis.web.app).
 
 ## Visualize own repository
-You can generate visualization data from your own Git repositories using our Python script. For details, check the README.md in the [tools](./tools/README.md) directory.
+You can generate visualization data from your own Git repositories using our Python script. For details, check the README.md in the [tools]([./tools/README.md](https://github.com/GaspardIV/gitvision/edit/main/tool/README.md)) directory.
 
 ## Project Setup
 
