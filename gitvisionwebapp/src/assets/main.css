@@ -52,3 +52,50 @@ a,
     background-color: hsla(160, 100%, 37%, 0.2);
   }
 }
+
+
+.dark{
+  background-color: rgba(0,0,0,0.2);
+  border-radius:50px;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  padding: 20px;
+}
+
+.main{
+  width: 450px;
+  height: 170px;
+  /*height: fit-content;*/
+  overflow: hidden;
+}
+
+.info-section {
+  color: #00ff00;
+}
+
+.message-section {
+  clear: both;
+  font-weight: bolder;
+  /*text-align: center;*/
+  color: white;
+}
+
+.time-section {
+  float: right;
+  color: yellow;
+}
+
+.sha-section {
+  float: right;
+  /*color: #00ff00;*/
+}
+
+.label {
+  font-weight: bold;
+}
+
+.data {
+  font-style: italic;
+}
+
+

@@ -2,6 +2,7 @@
 import { onMounted, onUnmounted, onUpdated, ref, watch } from "vue";
 import "aframe";
 import "aframe-extras";
+import "aframe-htmlembed-component";
 import { useGRepoStore } from "@/stores/gRepoStore";
 
 import { CommitsGraph } from "@/graph/CommitsGraph";
@@ -12,7 +13,29 @@ const repo = useGRepoStore();
 const element = ref();
 const commitsGraph = new CommitsGraph();
 
+window.hoverNode = (node: any) => {
+  let tooltip = document.querySelector("#forcegraph-tooltip");
+  if (node) {
+    let commit = node.commit;
+    tooltip.querySelector("#author").textContent = commit.author + " (" + commit.authorMail + ")";
+    tooltip.querySelector("#committer").textContent = commit.committer + " (" + commit.committerMail + ")";
+    tooltip.querySelector("#ID").textContent = commit.id;
+    tooltip.querySelector("#short").textContent = commit.short;
+    let commitTime = commit.time;
+    let timeSinceCommit = timeSince(commitTime); // Function to calculate time difference
+    //
+    // new Date().toLocaleString(undefined, {year: 'numeric', month: '2-digit', day: '2-digit', weekday:"long", hour: '2-digit', hour12: false, minute:'2-digit', second:'2-digit'}),
+    tooltip.querySelector('#time').textContent = `${commitTime.toLocaleString()}`;
 
+    // Display time in two formats
+    tooltip.querySelector('#time').textContent += ' (' + timeSinceCommit + ' ago)';
+    // tooltip.setAttribute('style', 'display: block');
+    tooltip.querySelector("#page").setAttribute("style", "display: block");
+  } else {
+    tooltip.querySelector("#page").setAttribute("style", "display: none");
+    // tooltip.setAttribute('style', 'display: none');
+  }
+};
 const fillGraphData = () => {
   commitsGraph.updateWithData(repo.commits, repo.branches, repo.tags);
   const sceneEl = document.querySelector("a-scene");
@@ -37,7 +60,39 @@ function updateBranchPosition(el: Entity, commitId: any) {
   }
 }
 
+function timeSince(date) {
+
+  let seconds = Math.floor((new Date() - date) / 1000);
+
+  let interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
+
 onMounted(() => {
+  let tooltip = document.querySelector("#forcegraph-tooltip #page");
+
+  tooltip.setAttribute("style", "opacity: 0");
+
   if (AFRAME.components.tag) delete AFRAME.components.tag;
   AFRAME.registerComponent("tag", {
     tick(time: number, timeDelta: number) {
@@ -97,23 +152,28 @@ onUnmounted(() => {
         position="0 1.6 0"
         far="100000"
         look-controls="pointerLockEnabled: true">
-
-        <a-cursor color="lavender" opacity="0.5" raycaster="objects: [forcegraph]"></a-cursor>
-        <a-text
-          id="forcegraph-tooltip"
-          position="0 -0.25 -1"
-          width="2"
-          align="center"
-          color="lavender"
-        ></a-text>
+        <a-cursor color="lavender" opacity="0.5" raycaster="objects: [forcegraph]">
+          <a-entity id="forcegraph-tooltip" position="0 -0.9 -1" htmlembed>
+            <div id="page" class="screen dark main">
+              <div class="time-section">
+                <p><span class="label"></span> <span class="data" id="time"></span></p>
+              </div>
+              <div class="message-section">
+                <p><span class="label"></span> <span class="data" id="short"></span></p>
+              </div>
+              <div class="info-section">
+                <p><span class="label">Author:</span> <span class="data" id="author"></span></p>
+                <p><span class="label">Committer:</span> <span class="data" id="committer"></span></p>
+              </div>
+              <div class="sha-section">
+                <p><span class="label">SHA:</span> <span class="data" id="ID"></span></p>
+              </div>
+            </div>
+          </a-entity>
+        </a-cursor>
       </a-camera>
     </a-entity>
-    <a-entity forcegraph="
-      on-node-hover: node => document.querySelector('#forcegraph-tooltip').setAttribute('value', node ? node.commit.short : '');"
-              foo
-              position="0 0 0"
-    >
-    </a-entity>
+    <a-entity forcegraph="on-node-hover: hoverNode" foo></a-entity>
     <div id="enter-ar" hidden="">
     </div>
   </a-scene>
