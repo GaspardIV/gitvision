@@ -6,13 +6,12 @@ import "aframe-htmlembed-component";
 import { useGRepoStore } from "@/stores/gRepoStore";
 
 import { CommitsGraph } from "@/graph/CommitsGraph";
-import { CSS2DObject, CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer";
-import type { Entity, ObjectMap } from "aframe";
+import type { Entity } from "aframe";
 
 const repo = useGRepoStore();
-const element = ref();
 const commitsGraph = new CommitsGraph();
 
+// @ts-ignore
 window.hoverNode = (node: any) => {
   let tooltip = document.querySelector("#forcegraph-tooltip");
   if (node) {
@@ -22,18 +21,12 @@ window.hoverNode = (node: any) => {
     tooltip.querySelector("#ID").textContent = commit.id;
     tooltip.querySelector("#short").textContent = commit.short;
     let commitTime = commit.time;
-    let timeSinceCommit = timeSince(commitTime); // Function to calculate time difference
-    //
-    // new Date().toLocaleString(undefined, {year: 'numeric', month: '2-digit', day: '2-digit', weekday:"long", hour: '2-digit', hour12: false, minute:'2-digit', second:'2-digit'}),
+    let timeSinceCommit = timeSince(commitTime);
     tooltip.querySelector('#time').textContent = `${commitTime.toLocaleString()}`;
-
-    // Display time in two formats
     tooltip.querySelector('#time').textContent += ' (' + timeSinceCommit + ' ago)';
-    // tooltip.setAttribute('style', 'display: block');
     tooltip.querySelector("#page").setAttribute("style", "display: block");
   } else {
     tooltip.querySelector("#page").setAttribute("style", "display: none");
-    // tooltip.setAttribute('style', 'display: none');
   }
 };
 const fillGraphData = () => {
@@ -89,9 +82,7 @@ function timeSince(date) {
 }
 
 onMounted(() => {
-  let tooltip = document.querySelector("#forcegraph-tooltip #page");
-
-  tooltip.setAttribute("style", "opacity: 0");
+  commitsGraph.updateWithData([], [], []);
 
   if (AFRAME.components.tag) delete AFRAME.components.tag;
   AFRAME.registerComponent("tag", {
@@ -114,12 +105,17 @@ onMounted(() => {
   if (AFRAME.components.foo) delete AFRAME.components.foo;
   AFRAME.registerComponent("foo", {
     init: function() {
-      setTimeout(() => {
+      // setTimeout(() => {
         commitsGraph.setup(this.el.components.forcegraph.forceGraph);
+        // window.hoverNode(null);
         if (repo.commits) {
           fillGraphData();
         }
-      }, 1000);
+        setTimeout(() => {
+          // @ts-ignore
+          window.hoverNode(null);
+        }, 1);
+      // }, 1000);
     }
   });
 });
@@ -127,6 +123,7 @@ onMounted(() => {
 watch(repo.commits, fillGraphData);
 onUpdated(fillGraphData);
 onUnmounted(() => {
+  commitsGraph.updateWithData([], [], []);
   delete AFRAME.components.foo;
   delete AFRAME.components.tag;
 });
@@ -134,7 +131,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <a-scene stats class="graph" fog="type: linear; color: #000; near:1; far: 100000"
+  <a-scene class="graph" fog="type: linear; color: #000; near:1; far: 100000"
            vr-mode-ui=" enterARButton: #enter-ar">
     <a-entity id="rig"
               rotation="0 270 0"

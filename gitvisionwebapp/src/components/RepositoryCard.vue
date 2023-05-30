@@ -57,54 +57,23 @@ h3 {
   cursor: pointer; /* Add this to change cursor on hover */
 }
 .button {
+  white-space: normal;
+  word-wrap: break-word;
+  //background-color: #4caf50; /* Add this to change background color on hover */
   border-radius: 25px; /* Add this for rounded corners */
   transition: all 0.5s; /* Add this for smooth hover effect */
 }
+
 .button:hover:active:enabled {
   background-color: #4caf50; /* Add this to change background color on hover */
   transform: scale(1.4); /* Add this to slightly increase the size on hover */
   cursor: pointer; /* Add this to change cursor on hover */
 }
-@media (min-width: 1024px) {
+
   .item {
-    margin-top: 0;
-    padding: 0.4rem 0 1rem calc(var(--section-gap) / 2);
+    width: 100%;
   }
 
-  img {
-    border: 1px solid var(--color-border);
-    background: var(--color-background);
-    border-radius: 8px;
-    width: 100px;
-    height: 100px;
-  }
-
-  .item:before {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    bottom: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:after {
-    content: ' ';
-    border-left: 1px solid var(--color-border);
-    position: absolute;
-    left: 0;
-    top: calc(50% + 25px);
-    height: calc(50% - 25px);
-  }
-
-  .item:first-of-type:before {
-    display: none;
-  }
-
-  .item:last-of-type:after {
-    display: none;
-  }
-}
 .columns {
   display: flex;
   flex-direction: row;
@@ -117,7 +86,7 @@ h3 {
 .column {
   display: flex;
   width: 300px;
-  min-width: 150px;
+  min-width: 100px;
   justify-content: center;
   align-items: center; /* Add this to center align the button */
 }

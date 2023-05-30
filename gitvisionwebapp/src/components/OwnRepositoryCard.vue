@@ -4,7 +4,12 @@
       <div class="content">
         <h1>Visualize your own repository</h1>
         <p>
-
+          GitVision allows you to upload your own repository. To start, prepare your data file using the
+          <a href="https://www.github.com/gaspardIV/gitvision/tool" target="_blank" rel="noopener">GitVision script</a>.
+          The repository will be stored in your browser's memory, ensuring that no private data will be transmitted to our server.
+          If you prefer more security, you can build GitVision from the source code and run it on your local machine.
+          For source code and more information about the project, visit our
+          <a href="https://www.github.com/gaspardIV/gitvision" target="_blank" rel="noopener">Github page</a>.
         </p>
         <input id="fileUpload" type="file" @change="fileInputChanged" />
         <router-link :to="'/own/'"

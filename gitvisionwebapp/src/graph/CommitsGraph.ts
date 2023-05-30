@@ -109,4 +109,12 @@ export class CommitsGraph {
     if (!node) return "";
     return `${node.x} ${node.y + 100} ${node.z}`;
   }
+
+  dispose() {
+    this.graph.graphData();
+    // this.graphData.dispose();
+    // this.graphForces.dispose();
+    // this.graphOptionsGui.dispose();
+    // this.graphStyle.dispose();
+  }
 }

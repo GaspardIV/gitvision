@@ -13,7 +13,7 @@ import HeaderView from "@/components/HeaderView.vue";
     <RepositoriesList />
   </main>
   <footer>
-    <h3
+    <h4
       style="
         position: fixed;
         border-radius: 0 20px 0 0;
@@ -25,8 +25,8 @@ import HeaderView from "@/components/HeaderView.vue";
       "
     >
       Finished Exploring?<br />
-      Assist with a <a>Short Survey for a Master's Thesis</a>!
-    </h3>
+      Please Assist with a <a href="https://docs.google.com/forms/d/1bjKZ8hNTx1DVMMZ7PspAB_cJOv3KHcO18ki87c084uQ">Short Survey for a Master's Thesis</a>!
+    </h4>
   </footer>
 </template>
 

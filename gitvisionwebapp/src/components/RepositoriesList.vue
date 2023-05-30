@@ -11,7 +11,7 @@ const repos = useRepoStore()
     v-for="repo in repos.repos"
     :key="repo.url"
     v-bind="repo"
-    style="margin-bottom: 50px"
+    style="margin-bottom: 50px; width: 100%"
   >
   </RepositoryCard>
   <OwnRepositoryCard />
