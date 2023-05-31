@@ -6,14 +6,13 @@
     ```
 
 2. **Download the Python script:**
-   The Python script is stored on GitHub. To download the `tool.py` script, use the `wget` command (or curl depending on your system), providing the direct link to the raw script. Here's an example of how to use `wget`:
+   To download the 'tool.py' script, please follow these steps:
 
-    ```bash
-    wget https://raw.githubusercontent.com/<user>/<repository>/branch/tool.py
-    ```
-
-   Replace `<user>` and `<repository>` with the actual username and repository name on Github.
-
+   1. Navigate to the 'tool.py' file on GitHub at this URL: https://github.com/GaspardIV/gitvision/blob/main/tool/tool.py
+   2. Click on the 'Raw' button, which is located at the top right of the file content.
+   3. Once the raw file content is displayed, right-click anywhere on the page and select 'Save As' to download the file.
+   
+   You can also clone the whole repository.
 3. **Clone the Git repository:**
    Clone the repository you want to analyze. For instance:
 

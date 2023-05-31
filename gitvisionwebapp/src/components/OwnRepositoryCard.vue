@@ -5,9 +5,9 @@
         <h1>Visualize your own repository</h1>
         <p>
           GitVision allows you to upload your own repository. To start, prepare your data file using the
-          <a href="https://www.github.com/gaspardIV/gitvision/tool" target="_blank" rel="noopener">GitVision script</a>.
-          The repository will be stored in your browser's memory, ensuring that no private data will be transmitted to our server.
-          If you prefer more security, you can build GitVision from the source code and run it on your local machine.
+          <a href="https://github.com/GaspardIV/gitvision/tree/main/tool" target="_blank" rel="noopener">GitVision script</a>.
+          All the data pertaining to your repository will be stored securely within your browser's memory. This ensures that no private data is sent anywhere outside your system. Please note, this is a frontend project, and all processing and storage occur locally, without any data transmission.
+          However you can always build GitVision from the source code and run it on your local machine.
           For source code and more information about the project, visit our
           <a href="https://www.github.com/gaspardIV/gitvision" target="_blank" rel="noopener">Github page</a>.
         </p>

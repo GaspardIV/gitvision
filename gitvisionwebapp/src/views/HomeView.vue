@@ -27,6 +27,8 @@ import HeaderView from "@/components/HeaderView.vue";
       Finished Exploring?<br />
       Please Assist with a <a href="https://docs.google.com/forms/d/1bjKZ8hNTx1DVMMZ7PspAB_cJOv3KHcO18ki87c084uQ">Short Survey for a Master's Thesis</a>!
     </h4>
+
+    <p>This page uses Google cookies for analytics. Learn more <a href="https://policies.google.com/technologies/cookies">here</a>.</p>
   </footer>
 </template>
 
