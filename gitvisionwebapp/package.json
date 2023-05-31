@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vueuse/core": "^10.1.2",
     "3d-force-graph": "^1.71.4",
     "aframe": "^1.4.2",
     "aframe-extras": "^7.0.0",
@@ -21,6 +22,7 @@
     "axios": "^1.4.0",
     "pako": "^2.1.0",
     "pinia": "^2.0.36",
+    "sass": "^1.62.1",
     "three": "^0.152.2",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0"

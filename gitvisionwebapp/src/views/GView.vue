@@ -189,7 +189,7 @@ onUnmounted(() => {
     <div id="enter-vr" hidden></div>
   </a-scene>
   <div id="forcegraph-tooltip" style="display: none;">
-    <div id="page" class="screen dark main" style="position: absolute">
+    <div id="page" class="dark__ main__" style="position: absolute">
       <div class="time-section">
         <p><span class="label"></span> <span class="data" id="time"></span></p>
       </div>
@@ -205,6 +205,13 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
+  <div class="controlls-info">
+
+    <p>
+      [MOBILE] Touch - fly forward + tilt sensors - rotation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    [DESKTOP] WSAD - fly + mouse - rotation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    [AR & VR - headset only] joysticks - fly + head - rotation</p>
+  </div>
 </template>
 
 <style scoped>
@@ -217,25 +224,14 @@ onUnmounted(() => {
   right: 0;
   bottom: 0;
 }
-
-#dom-overlay-message {
+.controlls-info{
   position: absolute;
-  left: 0;
   bottom: 0;
+  text-align: center;
+  left: 0;
   right: 0;
-  padding: 1em;
-  background: #33333355;
-  border-top: 5px solid #ffffff55;
-  color: white;
-}
-
-.a-dom-overlay button {
-  padding: 1em;
-  appearance: none;
-  background: #00000055;
-  border: 3px solid white;
-  border-radius: 1em;
-  margin: 1em 1em 0 0;
-  color: white;
+  font-size: 10px;
+  font-family: sans-serif;
+  z-index: 9999;
 }
 </style>

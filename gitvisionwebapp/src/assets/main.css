@@ -53,7 +53,7 @@ a,
 }
 
 
-.dark{
+.dark__{
   left: 0;
   bottom: 0;
   right: 0;
@@ -63,7 +63,7 @@ a,
   color: white;
 }
 
-.main{
+.main__{
   width: 450px;
   height: 170px;
   overflow: hidden;
