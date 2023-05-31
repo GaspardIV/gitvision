@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, onUpdated, watch } from "vue";
 import "aframe";
+import  AFRAME from "aframe";
 import "aframe-extras";
 import "aframe-htmlembed-component";
 import { useGRepoStore } from "@/stores/gRepoStore";
@@ -121,6 +122,13 @@ onMounted(() => {
         }
     }
   });
+// if (AFRAME.components['vr-mode-ui-if-headset']) delete AFRAME.components['vr-mode-ui-if-headset'];
+//   AFRAME.registerComponent('vr-mode-ui-if-headset', {
+//     init: function () {
+//       console.log('init', "hahahahah");
+//
+//     }
+//   })
 });
 
 watch([repo.hasLoadedCommits], fillGraphData);
@@ -135,12 +143,12 @@ onUnmounted(() => {
 
 <template>
   <a-scene class="graph" fog="type: linear; color: #000; near:1; far: 100000"
-           vr-mode-ui=" enterARButton: #enter-ar">
+            :vr-mode-ui="!AFRAME.utils.device.checkHeadsetConnected() ? 'enterARButton: #enter-ar; enterVRButton: #enter-vr; enabled: false;' : ''">
 
 
     <a-entity id="rig"
               rotation="0 270 0"
-              movement-controls="camera: #camera; constrainToNavMesh: true; fly: true; speed: 205.5;"
+              movement-controls="camera: #camera; fly: true; speed: 205.5;"
               position="25 0 25">
       <a-entity cursor="rayOrigin: mouse; mouseCursorStylesEnabled: true;"
                 raycaster="objects: [forcegraph];"></a-entity>
@@ -154,7 +162,7 @@ onUnmounted(() => {
         position="0 1.6 0"
         far="100000"
         look-controls="pointerLockEnabled: true">
-        <a-cursor color="lavender" opacity="0.5" raycaster="objects: [forcegraph]">
+        <a-cursor color="green" opacity="0.5" raycaster="objects: [forcegraph]">
 <!--          <a-entity id="forcegraph-tooltip" position="0 -0.9 -1" htmlembed visible="false" >-->
 <!--            <div id="page" class="screen dark main">-->
 <!--              <div class="time-section">-->
@@ -178,29 +186,25 @@ onUnmounted(() => {
     </a-entity>
     <a-entity forcegraph="on-node-hover: hoverNode" foo></a-entity>
     <div id="enter-ar" hidden></div>
-      <a-entity htmlembed>
-        <a href="#home" class="button">Home</a>
-      </a-entity>
+    <div id="enter-vr" hidden></div>
   </a-scene>
-  <div id="forcegraph-tooltip" style="display: none">
-
-  <div id="page" class="screen dark main" style="position: absolute">
-    <div class="time-section">
-      <p><span class="label"></span> <span class="data" id="time"></span></p>
-    </div>
-    <div class="message-section">
-      <p><span class="label"></span> <span class="data" id="short"></span></p>
-    </div>
-    <div class="info-section">
-      <p><span class="label">Author:</span> <span class="data" id="author"></span></p>
-      <p><span class="label">Committer:</span> <span class="data" id="committer"></span></p>
-    </div>
-    <div class="sha-section">
-      <p><span class="label">SHA:</span> <span class="data" id="ID"></span></p>
+  <div id="forcegraph-tooltip" style="display: none;">
+    <div id="page" class="screen dark main" style="position: absolute">
+      <div class="time-section">
+        <p><span class="label"></span> <span class="data" id="time"></span></p>
+      </div>
+      <div class="message-section">
+        <p><span class="label"></span> <span class="data" id="short"></span></p>
+      </div>
+      <div class="info-section">
+        <p><span class="label">Author:</span> <span class="data" id="author"></span></p>
+        <p><span class="label">Committer:</span> <span class="data" id="committer"></span></p>
+      </div>
+      <div class="sha-section">
+        <p><span class="label">SHA:</span> <span class="data" id="ID"></span></p>
+      </div>
     </div>
   </div>
-  </div>
-
 </template>
 
 <style scoped>
