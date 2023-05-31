@@ -31,9 +31,10 @@ window.hoverNode = (node: any) => {
     // @ts-ignore
     tooltip.querySelector('#time').textContent += ' (' + timeSinceCommit + ' ago)';
     // @ts-ignore
-    tooltip.setAttribute("visible", true);
+    tooltip.setAttribute("style", "display: block;");
   } else {
-    tooltip.setAttribute("visible", false);
+    // @ts-ignore
+    tooltip.setAttribute("style", "display: none;");
   }
 };
 const fillGraphData = () => {
@@ -135,6 +136,8 @@ onUnmounted(() => {
 <template>
   <a-scene class="graph" fog="type: linear; color: #000; near:1; far: 100000"
            vr-mode-ui=" enterARButton: #enter-ar">
+
+
     <a-entity id="rig"
               rotation="0 270 0"
               movement-controls="camera: #camera; constrainToNavMesh: true; fly: true; speed: 205.5;"
@@ -142,9 +145,9 @@ onUnmounted(() => {
       <a-entity cursor="rayOrigin: mouse; mouseCursorStylesEnabled: true;"
                 raycaster="objects: [forcegraph];"></a-entity>
       <a-entity laser-controls="hand: left"
-                raycaster="objects: [forcegraph]; lineColor: lavander; lineOpacity: 0.85;"></a-entity>
+                raycaster="objects: [forcegraph]; lineOpacity: 0.85;"></a-entity>
       <a-entity laser-controls="hand: right"
-                raycaster="objects: [forcegraph]; lineColor: lavander; lineOpacity: 0.85;"></a-entity>
+                raycaster="objects: [forcegraph]; lineOpacity: 0.85;"></a-entity>
       <a-camera
         camera
         id="camera"
@@ -152,29 +155,52 @@ onUnmounted(() => {
         far="100000"
         look-controls="pointerLockEnabled: true">
         <a-cursor color="lavender" opacity="0.5" raycaster="objects: [forcegraph]">
-          <a-entity id="forcegraph-tooltip" position="0 -0.9 -1" htmlembed visible="false" >
-            <div id="page" class="screen dark main">
-              <div class="time-section">
-                <p><span class="label"></span> <span class="data" id="time"></span></p>
-              </div>
-              <div class="message-section">
-                <p><span class="label"></span> <span class="data" id="short"></span></p>
-              </div>
-              <div class="info-section">
-                <p><span class="label">Author:</span> <span class="data" id="author"></span></p>
-                <p><span class="label">Committer:</span> <span class="data" id="committer"></span></p>
-              </div>
-              <div class="sha-section">
-                <p><span class="label">SHA:</span> <span class="data" id="ID"></span></p>
-              </div>
-            </div>
-          </a-entity>
+<!--          <a-entity id="forcegraph-tooltip" position="0 -0.9 -1" htmlembed visible="false" >-->
+<!--            <div id="page" class="screen dark main">-->
+<!--              <div class="time-section">-->
+<!--                <p><span class="label"></span> <span class="data" id="time"></span></p>-->
+<!--              </div>-->
+<!--              <div class="message-section">-->
+<!--                <p><span class="label"></span> <span class="data" id="short"></span></p>-->
+<!--              </div>-->
+<!--              <div class="info-section">-->
+<!--                <p><span class="label">Author:</span> <span class="data" id="author"></span></p>-->
+<!--                <p><span class="label">Committer:</span> <span class="data" id="committer"></span></p>-->
+<!--              </div>-->
+<!--              <div class="sha-section">-->
+<!--                <p><span class="label">SHA:</span> <span class="data" id="ID"></span></p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </a-entity>-->
+<!--          <a-entity geometry="primitive: box" material="shader: html; target: #forcegraph-tooltip"></a-entity>-->
         </a-cursor>
       </a-camera>
     </a-entity>
     <a-entity forcegraph="on-node-hover: hoverNode" foo></a-entity>
     <div id="enter-ar" hidden></div>
+      <a-entity htmlembed>
+        <a href="#home" class="button">Home</a>
+      </a-entity>
   </a-scene>
+  <div id="forcegraph-tooltip" style="display: none">
+
+  <div id="page" class="screen dark main" style="position: absolute">
+    <div class="time-section">
+      <p><span class="label"></span> <span class="data" id="time"></span></p>
+    </div>
+    <div class="message-section">
+      <p><span class="label"></span> <span class="data" id="short"></span></p>
+    </div>
+    <div class="info-section">
+      <p><span class="label">Author:</span> <span class="data" id="author"></span></p>
+      <p><span class="label">Committer:</span> <span class="data" id="committer"></span></p>
+    </div>
+    <div class="sha-section">
+      <p><span class="label">SHA:</span> <span class="data" id="ID"></span></p>
+    </div>
+  </div>
+  </div>
+
 </template>
 
 <style scoped>

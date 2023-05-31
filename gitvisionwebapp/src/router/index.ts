@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import { useGRepoStore } from '@/stores/gRepoStore'
-import GView from '@/views/GView.vue'
 
 const router = createRouter({
   // @ts-ignore
@@ -10,12 +9,12 @@ const router = createRouter({
     {
       path: '/own',
       name: 'own',
-      component: () => GView
+      component: () => import('@/views/GView.vue')
     },
     {
       path: '/localupload',
       name: 'localupload',
-      component: () => GView
+      component: () => import('@/views/GView.vue')
     },
     {
       path: '/',
@@ -25,7 +24,7 @@ const router = createRouter({
     {
       path: '/g/:owner/:repository/:until?',
       name: 'g',
-      component: () => GView
+      component: () => import('@/views/GView.vue')
     }
   ]
 })
