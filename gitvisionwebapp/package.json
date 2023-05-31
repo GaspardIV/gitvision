@@ -20,6 +20,7 @@
     "aframe-htmlembed-component": "^1.0.0",
     "aframe-look-at-component": "^1.0.0",
     "axios": "^1.4.0",
+    "firebase": "^9.22.1",
     "pako": "^2.1.0",
     "pinia": "^2.0.36",
     "sass": "^1.62.1",
