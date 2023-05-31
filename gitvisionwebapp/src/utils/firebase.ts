@@ -13,4 +13,5 @@ import { initializeApp, getApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 export const firebase = initializeApp(firebaseConfig);
+// console.log(getApp())
 export const analytics = getAnalytics(firebase);

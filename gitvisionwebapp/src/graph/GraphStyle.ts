@@ -10,7 +10,7 @@ export class GraphStyle {
   private hoverNode: CommitNode | null = null
 
   private optionsHashVisible = true
-  private optionsNodeSize = 10
+  private optionsNodeSize = 30
   // private branchMode= false;
   private ultraMode = false
   private graphOptionsGui: GraphOptionsGui | null = null
@@ -22,28 +22,17 @@ export class GraphStyle {
 
   setNodesObjects() {
     this.graph
-      .nodeRelSize(this.optionsNodeSize)
+      .nodeRelSize(25)
       .nodeOpacity(1)
     this.graph.refresh()
-    this.graph
-      .linkWidth((link) => (this.highlightLinks.has(link) ? 4 : 0))
-      .linkDirectionalParticles((link) => (this.highlightLinks.has(link) ? 4 : 0))
-      .linkDirectionalParticleWidth(4)
+    // this.graph
+      // .linkWidth((link) => (this.highlightLinks.has(link) ? 4 : 0))
+      // .linkDirectionalParticles(4)
+      // .linkDirectionalParticleWidth(20)
 
     this.graph.nodeColor((node) => {
-      if (this.highlightNodes.has(node)) {
-        if (this.hoverNode == node) {
-          return 'white'
-        }
-        // @ts-ignore
-        return node.color
-      } else if (this.highlightNodes.size > 0) {
-        // @ts-ignore
-        return node.color.replace('rgb', 'rgba').replace(')', ', 0.2)')
-      } else {
         // @ts-ignore
         return node.color.replace('rgb', 'rgba').replace(')', ', 0.8)')
-      }
     })
   }
 
@@ -51,40 +40,17 @@ export class GraphStyle {
     const nodesCount = this.graphData.commitIdToNodeMap.size
     this.graph.linkMaterial((link) => {
       // @ts-ignore
-      if (this.highlightLinks.has(link)) {
+      // if (this.highlightLinks.has(link)) {
 
         return new MeshBasicMaterial({
           // @ts-ignore
           color: link.color,
           transparent: true,
-          opacity: 1
+          opacity: 0.7
         })
         // @ts-ignore next-line
       // @ts-nocheck
-      } else if (this.highlightNodes.size > 0 || true) { // @ts-ignore
-        return new MeshBasicMaterial({
-          // @ts-ignore
-          color: link.color,
-          transparent: true,
-          opacity: 0.3
-        })
-      } else {
-        // const opacity =  (link.target.chronologicalOrder - link.source.chronologicalOrder) / nodesCount;
-        // @ts-ignore
-        const sourceOrder = this.graphData.commitIdToNodeMap.get(link.source).chronologicalOrder
-        // @ts-ignore
-        const targetOrder = this.graphData.commitIdToNodeMap.get(link.target).chronologicalOrder
-        let opacity = 1 - (targetOrder - sourceOrder) / (nodesCount / 3)
-        opacity = Math.max(0.2, opacity)
-        // console.log(opacity)
-        // const opacity = node.chronologicalOrder / this.graph.getNodesCount();
-        return new MeshBasicMaterial({
-          // @ts-ignore
-          color: link.color,
-          transparent: true,
-          opacity: opacity
-        })
-      }
+      // @ts-ignore
     })
   }
 
@@ -104,15 +70,13 @@ export class GraphStyle {
   private setParticles() {}
 
   private setActions() {
-    console.log('setActions', this.graph)
-
     // this.graph.onNodeRightClick(this.flyToNode.bind(this))
     // this.graph.onNodeClick(this.onNodeClick.bind(this))
     // this.graph.onLinkClick(this.onLinkClick.bind(this))
   }
 
   flyToNode(node: object) {
-    console.log('flyToNode', node)
+    // console.log('flyToNode', node)
     // node.__threeObj.material.color.set(0xff0000);
     const distance = 100
     // @ts-ignore

@@ -4,16 +4,16 @@ import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
 </script>
 
 <template>
-  <ThemeSwitcher class="theme"/>
+  <ThemeSwitcher class="theme-switcher"/>
   <RouterView />
 </template>
 
 <style scoped>
-theme-switcher {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 1rem;
+.theme-switcher {
+  position: fixed;
+  //top: 0;
+  //right: 0;
+  //margin: 1rem;
 }
 header {
   line-height: 1.5;

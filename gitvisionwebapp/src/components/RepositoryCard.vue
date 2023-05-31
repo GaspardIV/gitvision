@@ -63,11 +63,13 @@ h3 {
   border-radius: 25px; /* Add this for rounded corners */
   transition: all 0.5s; /* Add this for smooth hover effect */
 }
+
+
 .button {
   padding: 1em;
   appearance: none;
-  background: #00000055;
-  border: 3px solid white;
+  background: #00000095;
+  border: 3px solid var(--color-text);
   border-radius: 1em;
   //margin: 1em 1em 0 0;
   color: white;

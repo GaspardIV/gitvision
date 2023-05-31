@@ -32,7 +32,6 @@ export class CommitsGraph {
   private graphStyle = new GraphStyle(this.graph, this.graphData);
 
   setup(element: ForceGraph3DInstance) {
-    console.log("setup", element);
     this.graph = element;
     this.graphForces = new GraphForces(this.graph);
     this.graphOptionsGui = GraphOptionsGui.getInstance(this.graphForces);
@@ -40,7 +39,6 @@ export class CommitsGraph {
   }
 
   updateWithData(commits: Commit[], branches: Branch[], tags: Tag[]) {
-    console.log("updateWithData", commits, branches, tags);
     const gData = this.graphData.updateData(commits, branches, tags);
     this.graphForces.updateGraph();
     this.graphStyle.update();

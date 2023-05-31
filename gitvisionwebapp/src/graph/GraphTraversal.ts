@@ -118,9 +118,8 @@ export class GraphTraversal {
       Infinity
     )
     for (const commitNode of commitIdToNodeMap.values()) {
-      commitNode.topologicalOrder = commitNode.topologicalOrder - minTopologicalOrder
+      if (minTopologicalOrder != Infinity) commitNode.topologicalOrder = commitNode.topologicalOrder - minTopologicalOrder
     }
-    console.log(minTopologicalOrder)
   }
 
   static calculateChronologicalOrder(commitIdToNodeMap: Map<string, CommitNode>) {

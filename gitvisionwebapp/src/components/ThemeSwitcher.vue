@@ -30,6 +30,7 @@ const toggleDark = useToggle(isDark);
   min-width: 58px;
   min-height: 34px;
   //padding-right: 0;
+  //background-color: var(--color-background);
   //padding-top: 0;
   position: absolute;
   top: 0;
@@ -48,9 +49,10 @@ const toggleDark = useToggle(isDark);
   & + label {
     display: flex;
     height: 1.5em;
+
     width: 3em;
     border-radius: 1em;
-    background-color: var(--vt-c-sand);
+    background-color: var(--color-background);
     border: 0.125em solid hsl(207, 30%, 95%);
 
     span {
@@ -66,8 +68,6 @@ const toggleDark = useToggle(isDark);
   &:checked {
     & + label {
       border-color: hsl(207, 30%, 50%);
-      background: transparent;
-
       img {
         display: none;
       }
