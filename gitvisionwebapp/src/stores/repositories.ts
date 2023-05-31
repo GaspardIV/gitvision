@@ -1,8 +1,19 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Repo } from "@/stores/Types";
+import type { Repo } from '@/stores/Types'
+
 export const useRepoStore = defineStore('repositories', () => {
+  //   'vagrant' : 2 ,
+  //   'WordPress' : 5 ,
+  //   'tensorflow' : 15 ,
+  //   'axios' : 1 ,
+  //   'mac-setup' : 1 ,
+  //   'linux' : 119 ,
+  //   'awesome-for-beginners' : 1 ,
+  //   'async-listener' : 1 ,
+  //   'jekyll' : 2 ,
+  // rest of the repos are 1
   const repos: Ref<Repo[]> = ref([
     {
       url: 'https://github.com/tensorflow/tensorflow',
@@ -12,18 +23,18 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'Feature Branch Workflow',
       notes:
         'This repo provides a great example of a large, complex open-source project with a very active community.',
-      assetPath: '/public/tensorflow.json'
+      numberOfChunks: 15
     },
-    // {
-    //   url: 'https://github.com/torvalds/linux',
-    //   title: 'Linux',
-    //   description: 'The Linux kernel by Linus Torvalds.',
-    //   size: 'Large',
-    //   branchingStrategy: 'Unique',
-    //   notes:
-    //     'This repo provides an excellent perspective on how an extensive and long-standing project operates.',
-    //   assetPath: '/public/linux.json'
-    // },
+    {
+      url: 'https://github.com/torvalds/linux',
+      title: 'Linux',
+      description: 'The Linux kernel by Linus Torvalds.',
+      size: 'Large',
+      branchingStrategy: 'Unique',
+      notes:
+        'This repo provides an excellent perspective on how an extensive and long-standing project operates.',
+      numberOfChunks: 119
+    },
     {
       url: 'https://github.com/WordPress/WordPress',
       title: 'WordPress',
@@ -32,7 +43,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'Gitflow Workflow',
       notes:
         'WordPress, one of the most widely used CMS platforms, follows the Gitflow workflow. The repo offers a look at a mature, widely-used open-source project.',
-      assetPath: '/public/wordpress.json'
+      numberOfChunks: 5
     },
     {
       url: 'https://github.com/jekyll/jekyll',
@@ -43,7 +54,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'GitHub Flow',
       notes:
         "Jekyll's repository is a good example of a small to medium-sized project following the GitHub Flow branching strategy.",
-      assetPath: '/public/jekyll.json'
+      numberOfChunks: 2
     },
     {
       url: 'https://github.com/pjreddie/darknet',
@@ -53,7 +64,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'Feature Branch Workflow',
       notes:
         "Darknet's repository showcases a small project with significant impact in the field of AI.",
-      assetPath: '/public/darknet.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/cowsay-org/cowsay',
@@ -63,7 +74,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'Long-Running Branches Workflow',
       notes:
         'Cowsay is an iconic Unix program with an interesting commit history for its single purpose.',
-      assetPath: '/public/cowsay.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/expressjs/express',
@@ -73,7 +84,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'GitHub Flow',
       notes:
         'One of the most popular Node.js frameworks. Great for exploring JavaScript backend patterns.',
-      assetPath: '/public/express.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/typicode/json-server',
@@ -83,7 +94,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: '-',
       notes:
         'An interesting tool that simplifies frontend development by providing a quick backend for prototyping.',
-      assetPath: '/public/json-server.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/koajs/koa',
@@ -93,7 +104,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'GitHub Flow',
       notes:
         'An evolution of Express.js that introduces new patterns and utilities. Created by the original Express.js team.',
-      assetPath: '/public/koa.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/Microsoft/vscode-go',
@@ -103,7 +114,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: '-',
       notes:
         "One of the key components of the popular VS Code editor, demonstrating Microsoft's open source approach.",
-      assetPath: '/public/vscode-go.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/axios/axios',
@@ -113,7 +124,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: '-',
       notes:
         'One of the most popular libraries for making HTTP requests in JavaScript. Great for exploring asynchronous JavaScript.',
-      assetPath: '/public/axios.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/hashicorp/vagrant',
@@ -123,7 +134,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'GitHub Flow',
       notes:
         'A widely used tool in the software industry, great for understanding environment management in development.',
-      assetPath: '/public/vagrant.json'
+      numberOfChunks: 2
     },
     {
       url: 'https://github.com/Leaflet/Leaflet',
@@ -133,7 +144,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: '-',
       notes:
         'A leading open-source JavaScript library for mobile-friendly interactive maps, known for its simplicity, performance, and usability.',
-      assetPath: '/public/leaflet.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/piuccio/cowsay',
@@ -142,7 +153,7 @@ export const useRepoStore = defineStore('repositories', () => {
       size: 'Tiny',
       branchingStrategy: '-',
       notes: 'A fun, legendary command-line program. Excellent for a light-hearted break.',
-      assetPath: '/public/cowsay.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/othiym23/async-listener',
@@ -151,7 +162,7 @@ export const useRepoStore = defineStore('repositories', () => {
       size: 'Tiny',
       branchingStrategy: '-',
       notes: 'Interesting due to its impact on Node.js asynchronous programming.',
-      assetPath: '/public/async-listener.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/github/personal-website',
@@ -160,7 +171,7 @@ export const useRepoStore = defineStore('repositories', () => {
       size: 'Small',
       branchingStrategy: 'GitHub Flow',
       notes: "A good example of GitHub's open source strategy and community engagement.",
-      assetPath: '/public/personal-website.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/airbnb/javascript',
@@ -169,7 +180,7 @@ export const useRepoStore = defineStore('repositories', () => {
       size: 'Small',
       branchingStrategy: '-',
       notes: "An extremely popular JavaScript style guide that's influenced JS development.",
-      assetPath: '/public/airbnb-javascript.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/MunGell/awesome-for-beginners',
@@ -178,7 +189,7 @@ export const useRepoStore = defineStore('repositories', () => {
       size: 'Small',
       branchingStrategy: '-',
       notes: 'A community-driven project aimed to help beginners start with open-source.',
-      assetPath: '/public/awesome-for-beginners.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/yaronn/GifW00t',
@@ -187,7 +198,7 @@ export const useRepoStore = defineStore('repositories', () => {
       size: 'Tiny',
       branchingStrategy: '-',
       notes: 'An interesting tool developed as a pure JS solution.',
-      assetPath: '/public/gifw00t.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/ptb/mac-setup',
@@ -196,7 +207,7 @@ export const useRepoStore = defineStore('repositories', () => {
       size: 'Small',
       branchingStrategy: 'GitHub Flow',
       notes: 'Useful guide showcasing community best practices.',
-      assetPath: '/public/mac-setup.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/zricethezav/gitleaks',
@@ -206,7 +217,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'GitHub Flow',
       notes:
         'A security tool widely used in the industry to prevent committing sensitive information.',
-      assetPath: '/public/gitleaks.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/schollz/howmanypeoplearearound',
@@ -215,7 +226,7 @@ export const useRepoStore = defineStore('repositories', () => {
       size: 'Tiny',
       branchingStrategy: '-',
       notes: 'A unique tool that utilizes wifi signals in a fun way.',
-      assetPath: '/public/howmanypeoplearearound.json'
+      numberOfChunks: 1
     },
     {
       url: 'https://github.com/BurntSushi/ripgrep',
@@ -224,8 +235,17 @@ export const useRepoStore = defineStore('repositories', () => {
       size: 'Small',
       branchingStrategy: 'Feature Branch Workflow',
       notes: 'An efficient and fast searching tool, widely used and appreciated.',
-      assetPath: '/public/ripgrep.json'
+      numberOfChunks: 1
     }
   ])
-  return { repos: repos }
+
+  const getNumberOfChunks = (repoName: string) => {
+    const repo = repos.value.find((repo) => repo.url.includes(repoName))
+    return repo ? repo.numberOfChunks : 1
+  }
+
+  return {
+    repos: repos,
+    getNumberOfChunks
+  }
 })

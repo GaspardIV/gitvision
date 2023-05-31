@@ -12,7 +12,7 @@
           <a href="https://www.github.com/gaspardIV/gitvision" target="_blank" rel="noopener">Github page</a>.
         </p>
         <input id="fileUpload" type="file" @change="fileInputChanged" />
-        <router-link :to="'/own/'"
+        <router-link :to="'/localupload/'"
         ><button class="button is-primary is-small" :disabled="fileName===''">
           Explore {{ fileName }} repository in GitVision
         </button></router-link>

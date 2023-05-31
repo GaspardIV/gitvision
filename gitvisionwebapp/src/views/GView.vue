@@ -37,7 +37,7 @@ window.hoverNode = (node: any) => {
   }
 };
 const fillGraphData = () => {
-  commitsGraph.updateWithData(repo.commits, repo.branches, repo.tags);
+  commitsGraph.updateWithData(repo.getCommitsForViewFrame(3000, 0), repo.branches, repo.tags);
   const sceneEl = document.querySelector("a-scene");
   setTimeout(() => commitsGraph.initTagsAndBranches(sceneEl), 2000);
 };
@@ -92,8 +92,6 @@ function timeSince(date) {
 }
 
 onMounted(() => {
-  commitsGraph.updateWithData([], [], []);
-
   if (AFRAME.components.tag) delete AFRAME.components.tag;
   AFRAME.registerComponent("tag", {
     tick(time: number, timeDelta: number) {
@@ -117,17 +115,17 @@ onMounted(() => {
     init: function() {
       // @ts-ignore
         commitsGraph.setup(this.el.components.forcegraph.forceGraph);
-        if (repo.commits) {
+        if (repo.hasLoadedCommits) {
           fillGraphData();
         }
     }
   });
 });
 
-watch(repo.commits, fillGraphData);
+watch([repo.hasLoadedCommits], fillGraphData);
 onUpdated(fillGraphData);
 onUnmounted(() => {
-  commitsGraph.updateWithData([], [], []);
+  // commitsGraph.updateWithData([], [], []);
   delete AFRAME.components.foo;
   delete AFRAME.components.tag;
 });

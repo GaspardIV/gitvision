@@ -6,8 +6,7 @@ export type Repo = {
   size: string
   branchingStrategy: string
   notes: string
-  assetPath: string
-  iconUrl?: string
+  numberOfChunks: number
 }
 export class Commit {
   constructor(

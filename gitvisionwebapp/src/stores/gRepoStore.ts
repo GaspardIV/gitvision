@@ -1,92 +1,92 @@
-import { ref, reactive } from "vue";
-import type { Ref } from "vue";
-import { defineStore } from "pinia";
-import axios from "axios";
-import { Commit, Tag, Branch } from "@/stores/Types";
-import pako from "pako";
+import { ref, reactive, computed } from 'vue'
+import type { Ref } from 'vue'
+import { defineStore } from 'pinia'
+import axios from 'axios'
+import { Commit, Tag, Branch } from '@/stores/Types'
+import pako from 'pako'
+import { useRepoStore } from '@/stores/repositories'
 
+export const useGRepoStore = defineStore('grepo', () => {
+  const CHUNK_SIZE = 10000
+  const FILE_NAME: Ref<string> = ref('')
+  const name: Ref<string> = ref('')
+  const branches: Ref<Branch[]> = ref([])
+  const tags: Ref<Tag[]> = ref([])
+  const commits: Ref<Commit[]> = ref([])
+  const hasLoadedCommits: Ref<boolean> = ref(false)
+  const actualChunk: Ref<number> = ref(-1)
+  const currentChunkCommits: Ref<Commit[]> = ref([])
 
-export const useGRepoStore = defineStore("grepo", () => {
-  const FILE_NAME: Ref<string> = ref("");
-  const branches: Ref<Branch[]> = ref([]);
-  const tags: Ref<Tag[]> = ref([]);
-  const commits: Ref<Commit[]> = ref([]);
-  const chunks: { prev: any, current: any, next: any } = reactive({ prev: null, current: null, next: null });
-
-  async function loadRepoData(name: string, singleFileMode = true) {
-    if (singleFileMode) {
-      FILE_NAME.value = "/repos/" + name + ".json.gz";
-    } else {
-      FILE_NAME.value = "/repos/" + name + "_chunked" + "/" + name + ".json.gz";
+  async function fetchData(path: string) {
+    const data = await axios.get(path, {
+      responseType: 'arraybuffer',
+      decompress: false
+    })
+    let data2
+    try {
+      data2 = pako.inflate(data.data)
+      data2 = JSON.parse(new TextDecoder('utf-8').decode(data2))
+    } catch (e) {
+      data2 = JSON.parse(new TextDecoder().decode(data.data))
     }
-    await readCommitsFromFile(singleFileMode);
+    return data2
+  }
+
+  function reset() {
+    FILE_NAME.value = ''
+    branches.value = []
+    tags.value = []
+    commits.value = []
+    actualChunk.value = -1
+    currentChunkCommits.value = []
+    hasLoadedCommits.value = false
+    name.value = ''
+  }
+
+  async function loadRepoData(repo_name: string, singleFileMode = false) {
+    reset()
+    FILE_NAME.value = singleFileMode
+      ? `/repos/${repo_name}.json.gz`
+      : `/repos/${repo_name}_chunked/${repo_name}.json.gz`
+    name.value = repo_name
+    await readCommitsFromFile(singleFileMode)
   }
 
   async function readCommitsFromFile(singleFileMode = false) {
     if (singleFileMode) {
-      const data = await axios.get(FILE_NAME.value, {
-        responseType: "arraybuffer",
-        decompress: false
-      });
-
-
-      // @ts-ignore
-      console.log("xdd", data);
-      let data2;
-      try {
-        data2 = pako.inflate(data.data);
-        data2 = JSON.parse(new TextDecoder("utf-8").decode(data2));
-      }
-      catch (e) {
-        console.log(e);
-        data2 = JSON.parse(new TextDecoder().decode(data.data));
-      }
-      // @ts-ignore
-      processData({ data: data2 });
-      // @ts-ignore
-      processCommits(data2.commits);
+      const data = await fetchData(FILE_NAME.value)
+      processData({ data: data })
+      processCommits(data.commits)
     } else {
-      const data = await axios.get(
-        FILE_NAME.value.replace(".json.gz", "_branches_and_tags.json.gz"),
-        {
-          decompress: true
-        }
-      );
-      processData(data);
-      loadChunks(1);
+      const data = await fetchData(
+        FILE_NAME.value.replace('.json.gz', '_branches_and_tags.json.gz')
+      )
+      processData({ data: data })
+      const repos = useRepoStore()
+      await loadChunk(repos.getNumberOfChunks(name.value))
+      actualChunk.value = repos.getNumberOfChunks(name.value)
     }
   }
 
   async function readOwnRepoFromUpload(data: any) {
-    processData(data);
-    processCommits(data.data.commits);
-  }
-
-  async function loadChunks(chunkId: number) {
-    if (chunks.current && chunks.current.id === chunkId) {
-      return;
-    }
-    chunks.prev = chunks.current;
-    chunks.current = chunks.next;
-    chunks.next = await loadChunk(chunkId + 1);
-    processCommits(chunks.current.commits);
+    reset()
+    processData(data)
+    processCommits(data.data.commits)
   }
 
   async function loadChunk(chunkId: number) {
     try {
-      const data = await axios.get(
-        `${FILE_NAME.value.replace(".json.gz", "")}_commits_${chunkId}.json.gz`,
-        { decompress: true }
-      );
-      return { id: chunkId, commits: data.data };
+      const data = await fetchData(
+        `${FILE_NAME.value.replace('.json.gz', '')}_commits_${chunkId}.json.gz`
+      )
+      processCommits(data)
     } catch {
-      return null;
+      return null
     }
   }
 
-  function processData(data: { data: { branches: any[], tags: any[] } }) {
-    const { branches: dataBranches, tags: dataTags } = data.data;
-    console.log(dataBranches, "why it's not iterable");
+  // @ts-ignore
+  function processData({ data: { branches: dataBranches, tags: dataTags } }) {
     for (const branch of dataBranches) {
       branches.value.push(
         new Branch(
@@ -95,20 +95,26 @@ export const useGRepoStore = defineStore("grepo", () => {
           branch.commitMessage,
           new Date(branch.commitTime * 1000)
         )
-      );
+      )
     }
 
     for (const tag of dataTags) {
-      console.log(tag);
       tags.value.push(
-        new Tag(tag.name, tag.commitId, tag.name, tag.commitMessage, new Date(tag.commitTime * 1000))
-      );
+        new Tag(
+          tag.name,
+          tag.commitId,
+          tag.name,
+          tag.commitMessage,
+          new Date(tag.commitTime * 1000)
+        )
+      )
     }
   }
 
   function processCommits(data: any[]) {
-    for (const commit of data.slice(-2000)) {
-      commits.value.push(
+    const result = []
+    for (const commit of data) {
+      result.push(
         new Commit(
           commit.author_name,
           commit.author_email,
@@ -121,16 +127,34 @@ export const useGRepoStore = defineStore("grepo", () => {
           new Date(commit.committed_date * 1000),
           commit.tag
         )
-      );
+      )
     }
+    commits.value.push(...result)
+    hasLoadedCommits.value = true
+  }
+
+  function getCommitsForViewFrame(count: number, start: number) {
+    const result = []
+    // COMMIT 0 IS LAST IN LAST CHUNK
+    // COMMIT 1 IS SECOND LAST IN LAST CHUNK
+    const startIndex = commits.value.length - 1 - start
+    const endIndex = Math.max(startIndex - count, 0)
+    for (let i = endIndex; i <= startIndex; i++) {
+      if (commits.value[i] === undefined) {
+        console.log('todo try to load new chunk')
+        break
+      }
+      result.push(commits.value[i])
+    }
+    return result
   }
 
   return {
-    commits,
     tags,
     branches,
     loadRepoData,
-    loadChunks,
-    readOwnRepoFromUpload
-  };
-});
+    readOwnRepoFromUpload,
+    getCommitsForViewFrame,
+    hasLoadedCommits
+  }
+})

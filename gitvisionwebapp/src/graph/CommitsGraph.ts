@@ -78,9 +78,6 @@ export class CommitsGraph {
     this.graphData.branches.forEach((branch) => {
       const branchEl = document.createElement("a-text");
       const nodeEl = this.graphData.commitIdToNodeMap.get(branch.commitId);
-      console.log("nodeEl", nodeEl);
-      console.log("branch", branch);
-      console.log(this.graphData.commitIdToNodeMap, "xdd???", branch.commitId);
       if (!nodeEl) {
         return;
       }
