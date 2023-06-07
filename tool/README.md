@@ -8,16 +8,14 @@
 2. **Download the Python script:**
    To download the 'tool.py' script, please follow these steps:
 
-   1. Navigate to the 'tool.py' file on GitHub at this URL: https://github.com/GaspardIV/gitvision/blob/main/tool/tool.py
-   2. Click on the 'Raw' button, which is located at the top right of the file content.
-   3. Once the raw file content is displayed, right-click anywhere on the page and select 'Save As' to download the file.
+   1. download 'tool.py' file on GitHub at this URL: https://github.com/GaspardIV/gitvision/blob/main/tool/tool.py
    
    You can also clone the whole repository.
 3. **Clone the Git repository:**
    Clone the repository you want to analyze. For instance:
 
     ```bash
-    git clone https://github.com/<user>/<repository>.git
+    git clone REPOSITORY_URL
     ```
 
    This command will clone the repository into a folder named after the repository in your current directory.
@@ -35,4 +33,4 @@
 
    - For `gitvis.web.app`: Go to [gitvis.web.app](https://gitvis.web.app) and upload the `.json.gz` file at the bottom of the website.
 
-   - For building from sources`gitvisionwebapp`: First, you need to clone and build `gitvisionwebapp` from its sources. Once done, rename the generated `.json.gz` file to `own.json.gz` and paste it into `gitvisionwebapp/public/repos`. Then, go to `localhost:<your_port>/own` in your web browser. Alternatively, you can leave the name as it is, paste it in the same place and navigate to `localhost:<your_port>/g/<username>/<repository>`. Replace `<username>` and `<repository>` with your GitHub username and the name of your repository respectively.
+   - For building from sources`gitvisionwebapp`: First, you need to clone and build `gitvisionwebapp` from its sources. Once done, rename the generated `.json.gz` file to `own.json.gz` and paste it into `gitvisionwebapp/public/repos`. Then, go to `localhost:<your_port>/own` in your web browser. Alternatively you can go to `localhost:port` and upload the `.json.gz` file at the bottom of the website.
