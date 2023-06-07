@@ -7,11 +7,11 @@ import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer";
 import { GraphData } from "@/graph/GraphData";
 import type { Commit } from "@/stores/Types";
 import { GraphForces } from "@/graph/GraphForces";
-import { GraphOptionsGui } from "@/graph/GraphOptionsGui";
+// import { GraphOptionsGui } from "@/graph/GraphOptionsGui";
 import { GraphStyle } from "@/graph/GraphStyle";
 // @ts-ignore
 import { FlyControls } from "three/examples/jsm/controls/FlyControls";
-import type { Component, Scene } from "aframe";
+import type { Scene } from "aframe";
 
 
 export class CommitsGraph {
@@ -27,15 +27,13 @@ export class CommitsGraph {
 
   private graphForces : GraphForces | null = null
 
-  private graphOptionsGui : GraphOptionsGui | null = null;//GraphOptionsGui.getInstance(this.graphForces)
+  // private graphOptionsGui : GraphOptionsGui | null = null;//GraphOptionsGui.getInstance(this.graphForces)
 
   private graphStyle = new GraphStyle(this.graph)
-  private aframeGraph: Component | null = null
-
   setup(element: ForceGraph3DInstance) {
     this.graph = element
     this.graphForces = new GraphForces(this.graph)
-    this.graphOptionsGui = GraphOptionsGui.getInstance(this.graphForces)
+    // this.graphOptionsGui = GraphOptionsGui.getInstance(this.graphForces)
     this.graphStyle = new GraphStyle(this.graph)
   }
 
@@ -44,7 +42,7 @@ export class CommitsGraph {
     this.graphForces?.updateGraph()
     this.graphStyle.update()
     this.graph.graphData(gData)
-    this.graphStyle.setOptions(this.graphOptionsGui)
+    // this.graphStyle.setOptions(this.graphOptionsGui)
     this.graph.refresh()
   }
 

@@ -1,4 +1,4 @@
-import { ref, reactive, computed } from 'vue'
+import { ref, computed } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
@@ -9,7 +9,6 @@ import { analytics } from "@/utils/firebase";
 import { logEvent } from "firebase/analytics";
 
 export const useGRepoStore = defineStore('grepo', () => {
-  const CHUNK_SIZE = 10000
   const FILE_NAME: Ref<string> = ref('')
   const name: Ref<string> = ref('')
   const branches: Ref<Branch[]> = ref([])

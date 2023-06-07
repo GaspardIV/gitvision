@@ -99,7 +99,7 @@ function timeSince(date) {
 onMounted(() => {
   if (AFRAME.components.tag) delete AFRAME.components.tag;
   AFRAME.registerComponent("tag", {
-    tick(time: number, timeDelta: number) {
+    tick() {
       const el = this.el;
       const commitId = this.data;
       updateTagPosition(el, commitId);
@@ -108,7 +108,7 @@ onMounted(() => {
 
   if (AFRAME.components.branch) delete AFRAME.components.branch;
   AFRAME.registerComponent("branch", {
-    tick(time: number, timeDelta: number) {
+    tick() {
       const el = this.el;
       const commitId = this.data;
       updateBranchPosition(el, commitId);
@@ -125,8 +125,8 @@ onMounted(() => {
         }
     }
   });
-  if (AFRAME.components.cameralog) delete AFRAME.components.cameralog;
-  AFRAME.registerComponent("cameralog", {
+  if (AFRAME.components.chunkloader) delete AFRAME.components.cameralog;
+  AFRAME.registerComponent("chunkloader", {
     tick: async function() {
       let x = this.el.object3D.position.x;
       if (x > (numberOfCommits.value) * 50 /*+ 1000 */&& repo.canLoadMoreCommits) {
@@ -194,6 +194,7 @@ onUnmounted(() => {
         id="camera"
         position="0 1.6 0"
         far="100000"
+        chunkloader
         look-controls="pointerLockEnabled: true">
         <a-cursor color="green" opacity="0.5" raycaster="objects: [forcegraph]">
 <!--          <a-entity id="forcegraph-tooltip" position="0 -0.9 -1" htmlembed visible="false" >-->
@@ -222,7 +223,7 @@ onUnmounted(() => {
     <div id="enter-vr" hidden></div>
   </a-scene>
   <div id="forcegraph-tooltip" style="display: none;">
-    <div id="page" class="dark__ main__" style="position: absolute">
+    <div id="page" class="dark__ main__" style="position: absolute;z-index: 101">
       <div class="time-section">
         <p><span class="label"></span> <span class="data" id="time"></span></p>
       </div>
@@ -241,9 +242,9 @@ onUnmounted(() => {
   <div class="controlls-info">
 
     <p>
-      [MOBILE] Touch - fly forward + tilt sensors - rotation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    [DESKTOP] WSAD - fly + mouse - rotation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    [AR & VR - headset only] joysticks - fly + head - rotation</p>
+      [Desktop 3D]: WSAD=Fly, Mouse=Rotate, Esc=Cursor<BR/>
+      [Mobile 3D/AR/VR]: Touch=Fly, Tilt=Rotate<BR/>
+      [Headset AR/VR]: Joysticks=Fly, Head=Rotate</p>
   </div>
 </template>
 
@@ -257,14 +258,15 @@ onUnmounted(() => {
   right: 0;
   bottom: 0;
 }
+
 .controlls-info{
   position: absolute;
   bottom: 0;
-  text-align: center;
+  text-align: LEFT;
   left: 0;
   right: 0;
   font-size: 10px;
   font-family: sans-serif;
-  z-index: 9999;
+  z-index: 100;
 }
 </style>

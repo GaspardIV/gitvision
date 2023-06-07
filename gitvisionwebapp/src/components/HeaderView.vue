@@ -16,6 +16,13 @@
       <a href="http://github.com/gaspardIV/gitvision" target="_blank">Github</a>. Try the
       visualization by exploring a repository from the list below:
     </p>
+    <br/>
+    <p>
+      Controls:<br/>
+      Mobile and Mobile AR&VR: To move around, simply touch the screen and drag in the direction you want to fly. For rotation, tilt the device in the direction you wish to look.<br/>
+      Desktop: Use the 'W' key to fly forward, 'S' key to fly backward, and 'A' and 'D' keys to strafe left and right respectively. Your mouse controls your viewpoint, simply move it to look around. To display the cursor, hit the 'Esc' key.<br/>
+      AR & VR - Headset: Use the joysticks on your headset to control your movement in any direction. Your physical head movement controls the rotation, so just look in the direction you want to face.<br/>
+    </p>
   </div>
 </template>
 

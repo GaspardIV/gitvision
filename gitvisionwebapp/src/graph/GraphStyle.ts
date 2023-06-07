@@ -1,9 +1,9 @@
 import type { ForceGraph3DGenericInstance, ForceGraph3DInstance } from '3d-force-graph'
 import { MeshBasicMaterial } from 'three'
-import { GraphOptionsGui } from '@/graph/GraphOptionsGui'
+// import { GraphOptionsGui } from '@/graph/GraphOptionsGui'
 
 export class GraphStyle {
-  private graphOptionsGui: GraphOptionsGui | null = null
+  // private graphOptionsGui: GraphOptionsGui | null = null
 
   constructor(
     private graph: ForceGraph3DGenericInstance<ForceGraph3DInstance>
@@ -42,8 +42,8 @@ export class GraphStyle {
     this.graph.linkDirectionalArrowLength(12).linkDirectionalArrowRelPos(0.5)
   }
 
-  setOptions(graphOptionsGui: GraphOptionsGui | null) {
-    this.graphOptionsGui = graphOptionsGui
-    graphOptionsGui?.onStyleChange(this.update.bind(this))
-  }
+  // setOptions(graphOptionsGui: GraphOptionsGui | null) {
+  //   this.graphOptionsGui = graphOptionsGui
+  //   graphOptionsGui?.onStyleChange(this.update.bind(this))
+  // }
 }

@@ -43,7 +43,7 @@ export class GraphOptionsGui {
     this.gui
       .add(this.settings, 'centerStrength', -10.0, 10.0, 0.01)
       .onChange(graphForces.setCenterStrength.bind(graphForces))
-    this.graphForces.setGui(this)
+    // this.graphForces.setGui(this)
     // this.gui.destroy()
   }
 

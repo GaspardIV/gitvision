@@ -1,9 +1,9 @@
 import type { ForceGraph3DGenericInstance, ForceGraph3DInstance } from '3d-force-graph'
-import { GraphOptionsGui } from '@/graph/GraphOptionsGui'
+// import { GraphOptionsGui } from '@/graph/GraphOptionsGui'
 
 export class GraphForces {
   private graph: ForceGraph3DGenericInstance<ForceGraph3DInstance>
-  private gui: GraphOptionsGui | null = null
+  // private gui: GraphOptionsGui | null = null
 
   constructor(
     graph: ForceGraph3DGenericInstance<ForceGraph3DInstance>,
@@ -74,14 +74,14 @@ export class GraphForces {
     })
   }
 
-  createStickToZForce() {
-    this.graph.d3Force('stickToZ', (alpha) => {
-      this.graph.graphData().nodes.forEach((node) => {
-        // @ts-ignore
-        node.fz = (node.j) * 10;
-      })
-    })
-  }
+  // createStickToZForce() {
+  //   this.graph.d3Force('stickToZ', (alpha) => {
+  //     this.graph.graphData().nodes.forEach((node) => {
+  //       // @ts-ignore
+  //       node.fz = (node.j) * 10;
+  //     })
+  //   })
+  // }
 
   getChargeStrength() {
     return this.chargeStrength
@@ -95,7 +95,7 @@ export class GraphForces {
     return this.centerStrength
   }
 
-  setGui(param: GraphOptionsGui) {
-    this.gui = param
-  }
+  // setGui(param: GraphOptionsGui) {
+  //   this.gui = param
+  // }
 }
