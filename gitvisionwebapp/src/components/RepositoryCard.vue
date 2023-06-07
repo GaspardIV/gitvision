@@ -15,7 +15,7 @@
         <div class="column">
           <div class="tags">
             <span class="tag is-info">Size: {{ props.size }}</span> <br />
-            <span class="tag is-info">Branching: {{ props.branchingStrategy }}</span>
+<!--            <span class="tag is-info">Branching: {{ props.branchingStrategy }}</span>-->
           </div>
         </div>
         <div class="column">

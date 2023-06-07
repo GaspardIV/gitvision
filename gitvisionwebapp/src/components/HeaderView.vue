@@ -14,7 +14,7 @@
       GitVision is a web tool designed to visualize Git repositories in virtual, augmented, and 3D
       reality. You can read more information about this project on
       <a href="http://github.com/gaspardIV/gitvision" target="_blank">Github</a>. Try the
-      visualization by exploring a repository from the list below:
+      visualization by exploring a repository from the list below. Personally i recommend start with tiny repository like cowsay,or async-listener, then move to medium repositories like Leaflet and Jekyll, then try large repositories (TensorFlow and Linux).
     </p>
     <br/>
     <p>

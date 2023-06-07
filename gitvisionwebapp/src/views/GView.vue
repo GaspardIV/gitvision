@@ -125,7 +125,7 @@ onMounted(() => {
         }
     }
   });
-  if (AFRAME.components.chunkloader) delete AFRAME.components.cameralog;
+  if (AFRAME.components.chunkloader) delete AFRAME.components.chunkloader;
   AFRAME.registerComponent("chunkloader", {
     tick: async function() {
       let x = this.el.object3D.position.x;
