@@ -35,7 +35,7 @@ export class GraphOptionsGui {
     this.settings.link = graphForces.getLinkStrength()
     this.settings.centerStrength = graphForces.getCenterStrength()
     this.gui
-      .add(this.settings, 'charge', -5500.0, 500.0, 1)
+      .add(this.settings, 'charge', -15500.0, 15500.0, 1)
       .onChange(graphForces.setChargeStrength.bind(graphForces))
     this.gui
       .add(this.settings, 'link', 0.0, 10.0, 0.01)
@@ -44,7 +44,7 @@ export class GraphOptionsGui {
       .add(this.settings, 'centerStrength', -10.0, 10.0, 0.01)
       .onChange(graphForces.setCenterStrength.bind(graphForces))
     this.graphForces.setGui(this)
-    this.gui.destroy()
+    // this.gui.destroy()
   }
 
   // destructor

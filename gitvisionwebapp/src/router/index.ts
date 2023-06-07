@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import { useGRepoStore } from '@/stores/gRepoStore'
+import { analytics, firebase } from "@/utils/firebase";
+import { logEvent } from "firebase/analytics";
 
 const router = createRouter({
   // @ts-ignore
@@ -30,6 +32,11 @@ const router = createRouter({
 })
 
 router.beforeResolve(async (to) => {
+  logEvent(analytics, 'page_view', {
+    page_title: typeof to.name === 'string' ? to.name : 'undefined',
+    page_location: window.location.href,
+    page_path: to.path,
+  })
   try {
     const repoStore = useGRepoStore()
     if (to.name === 'own') {

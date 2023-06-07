@@ -25,7 +25,7 @@ const toggleDark = useToggle(isDark);
   margin-right: 10px;
   background-size: 90% 90%;
   border: 0;
-  bottom: 0;
+  //bottom: 0;
   cursor: pointer;
   min-width: 58px;
   min-height: 34px;
