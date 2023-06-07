@@ -5,6 +5,8 @@ import axios from 'axios'
 import { Commit, Tag, Branch } from '@/stores/Types'
 import pako from 'pako'
 import { useRepoStore } from '@/stores/repositories'
+import { analytics } from "@/utils/firebase";
+import { logEvent } from "firebase/analytics";
 
 export const useGRepoStore = defineStore('grepo', () => {
   const CHUNK_SIZE = 10000
@@ -18,6 +20,7 @@ export const useGRepoStore = defineStore('grepo', () => {
   const currentChunkCommits: Ref<Commit[]> = ref([])
 
   async function fetchData(path: string) {
+    logEvent(analytics, 'fetchData', { path: path })
     const data = await axios.get(path, {
       responseType: 'arraybuffer',
       decompress: false
@@ -76,6 +79,7 @@ export const useGRepoStore = defineStore('grepo', () => {
 
   async function loadChunk(chunkId: number) {
     try {
+      console.log('loading chunk', chunkId)
       const data = await fetchData(
         `${FILE_NAME.value.replace('.json.gz', '')}_commits_${chunkId}.json.gz`
       )
@@ -129,23 +133,30 @@ export const useGRepoStore = defineStore('grepo', () => {
         )
       )
     }
-    commits.value.push(...result)
+
+    commits.value.unshift(...result)
     hasLoadedCommits.value = true
   }
 
-  function getCommitsForViewFrame(count: number, start: number) {
+  async function getCommitsForViewFrame(count: number, start: number) {
     const result = []
+    console.log('getCommitsForViewFrame', count, start)
     // COMMIT 0 IS LAST IN LAST CHUNK
     // COMMIT 1 IS SECOND LAST IN LAST CHUNK
-    const startIndex = commits.value.length - 1 - start
-    const endIndex = Math.max(startIndex - count, 0)
+    let startIndex = commits.value.length - 1 - start
+    let endIndex = Math.max(startIndex - count, 0)
+    if (endIndex <= 0) {
+      await loadChunk(actualChunk.value - 1)
+      actualChunk.value = actualChunk.value - 1
+      startIndex = commits.value.length - 1 - start
+      endIndex = Math.max(startIndex - count, 0)
+    }
+
     for (let i = endIndex; i <= startIndex; i++) {
-      if (commits.value[i] === undefined) {
-        console.log('todo try to load new chunk')
-        break
-      }
       result.push(commits.value[i])
     }
+    console.log('result', result.length)
+    console.log(result[0].id, result[result.length - 1].id)
     return result
   }
 
@@ -155,6 +166,9 @@ export const useGRepoStore = defineStore('grepo', () => {
     loadRepoData,
     readOwnRepoFromUpload,
     getCommitsForViewFrame,
-    hasLoadedCommits
+    hasLoadedCommits,
+    canLoadMoreCommits: computed(() => {
+      return actualChunk.value > 0
+    })
   }
 })

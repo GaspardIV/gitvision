@@ -42,6 +42,7 @@ export class GraphForces {
     this.createCenterForce()
     this.createStickToYForce()
     this.createStickToXForce()
+    // this.createStickToZForce() //removed because it is not worth it, looks bad
   }
 
   createChargeForce() {
@@ -68,6 +69,16 @@ export class GraphForces {
       this.graph.graphData().nodes.forEach((node) => {
         // @ts-ignore
         node.fy = (node.topologicalOrder) * 10;
+        // node.fy = 0
+      })
+    })
+  }
+
+  createStickToZForce() {
+    this.graph.d3Force('stickToZ', (alpha) => {
+      this.graph.graphData().nodes.forEach((node) => {
+        // @ts-ignore
+        node.fz = (node.j) * 10;
       })
     })
   }

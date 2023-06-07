@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, onUpdated, watch } from "vue";
+import { onMounted, onUnmounted, onUpdated, ref, watch } from "vue";
 import "aframe";
 import  AFRAME from "aframe";
 import "aframe-extras";
@@ -8,6 +8,9 @@ import { useGRepoStore } from "@/stores/gRepoStore";
 
 import { CommitsGraph } from "@/graph/CommitsGraph";
 import type { Entity } from "aframe";
+
+const numberOfCommits = ref(3000);
+let currentCommitBegin = ref(0); // start at 3000
 
 const repo = useGRepoStore();
 const commitsGraph = new CommitsGraph();
@@ -38,8 +41,8 @@ window.hoverNode = (node: any) => {
     tooltip.setAttribute("style", "display: none;");
   }
 };
-const fillGraphData = () => {
-  commitsGraph.updateWithData(repo.getCommitsForViewFrame(3000, 0), repo.branches, repo.tags);
+const fillGraphData = async () => {
+  commitsGraph.updateWithData(await repo.getCommitsForViewFrame(numberOfCommits.value, currentCommitBegin.value), repo.branches, repo.tags);
   const sceneEl = document.querySelector("a-scene");
   setTimeout(() => commitsGraph.initTagsAndBranches(sceneEl), 2000);
 };
@@ -122,21 +125,51 @@ onMounted(() => {
         }
     }
   });
-// if (AFRAME.components['vr-mode-ui-if-headset']) delete AFRAME.components['vr-mode-ui-if-headset'];
-//   AFRAME.registerComponent('vr-mode-ui-if-headset', {
-//     init: function () {
-//       console.log('init', "hahahahah");
-//
-//     }
-//   })
+  if (AFRAME.components.cameralog) delete AFRAME.components.cameralog;
+  AFRAME.registerComponent("cameralog", {
+    tick: async function() {
+      let x = this.el.object3D.position.x;
+      if (x > (numberOfCommits.value) * 50 /*+ 1000 */&& repo.canLoadMoreCommits) {
+        currentCommitBegin.value += numberOfCommits.value;
+
+        this.el.object3D.position.x = 0;
+        this.el.object3D.position.y = 0;
+        await fillGraphData()
+        this.el.object3D.position.x = 0;
+      } else if (x < 0/*- 1000*/ && currentCommitBegin.value > 0) {
+        currentCommitBegin.value -= numberOfCommits.value;
+        currentCommitBegin.value = Math.max(0, currentCommitBegin.value);
+        await fillGraphData()
+        this.el.object3D.position.x = (/*currentCommitBegin.value +*/ numberOfCommits.value) * 50;
+      }
+
+
+      /*
+
+            let x = this.el.object3D.position.x;
+      if (x > (numberOfCommits.value)/3*2 * 50 + 1000 && repo.canLoadMoreCommits) {
+        currentCommitBegin.value += Math.floor(numberOfCommits.value / 3);
+        this.el.object3D.position.x = numberOfCommits.value/3 * 50;
+        await fillGraphData()
+        this.el.object3D.position.x = numberOfCommits.value/3 * 50;
+      } else if (x < (numberOfCommits.value)/3 * 50 - 1000 && currentCommitBegin.value > 0) {
+        currentCommitBegin.value -= Math.floor(numberOfCommits.value / 3);
+        currentCommitBegin.value = Math.max(0, currentCommitBegin.value);
+        this.el.object3D.position.x = numberOfCommits.value/3*2 * 50;
+        await fillGraphData()
+        this.el.object3D.position.x = numberOfCommits.value/3*2 * 50;
+      }
+       */
+    }
+  });
 });
 
 watch([repo.hasLoadedCommits], fillGraphData);
 onUpdated(fillGraphData);
 onUnmounted(() => {
-  // commitsGraph.updateWithData([], [], []);
   delete AFRAME.components.foo;
   delete AFRAME.components.tag;
+  delete AFRAME.components.branch;
 });
 
 </script>
@@ -148,7 +181,7 @@ onUnmounted(() => {
 
     <a-entity id="rig"
               rotation="0 270 0"
-              movement-controls="camera: #camera; fly: true; speed: 205.5;"
+              movement-controls="camera: #camera; fly: true; speed: 200;"
               position="25 0 25">
       <a-entity cursor="rayOrigin: mouse; mouseCursorStylesEnabled: true;"
                 raycaster="objects: [forcegraph];"></a-entity>

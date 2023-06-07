@@ -11,9 +11,6 @@ import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
 <style scoped>
 .theme-switcher {
   position: fixed;
-  //top: 0;
-  //right: 0;
-  //margin: 1rem;
 }
 header {
   line-height: 1.5;

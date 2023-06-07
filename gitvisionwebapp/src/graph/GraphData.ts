@@ -7,12 +7,7 @@ export type CommitNode = {
   commit: Commit
   topologicalOrder: number
   chronologicalOrder: number
-  neighborsToHighlight: CommitNode[]
-  linksToHighlight: CommitsLink[]
-
-  firstChild: CommitNode | null
-
-  firstParent: CommitNode | null
+  // j: number
   colorGroup: number
   color: string
 }
@@ -49,9 +44,10 @@ export class GraphData {
     this.updateCommitsLinks()
     GraphTraversal.colorNodes(this.commitIdToNodeMap)
     GraphTraversal.colorLinks(this.commitIdToNodeMap, this.commitsLinks)
-    GraphTraversal.calculateTopologicalOrder(this.commitIdToNodeMap)
     GraphTraversal.calculateChronologicalOrder(this.commitIdToNodeMap)
-    GraphTraversal.calculateHighlighting(this.commitIdToNodeMap, this.commitsLinks)
+    GraphTraversal.calculateTopologicalOrder(this.commitIdToNodeMap)
+    GraphTraversal.calculateTopologicalOrder2(this.commitIdToNodeMap)
+    // GraphTraversal.calculateJCurvedBranches(this.commitIdToNodeMap)
 
     return {
       nodes: this.commitNodes,
@@ -66,11 +62,8 @@ export class GraphData {
         commit: commit,
         topologicalOrder: -1,
         chronologicalOrder: -1,
-        neighborsToHighlight: [],
-        linksToHighlight: [],
         colorGroup: -1,
-        firstChild: null,
-        firstParent: null,
+        // j: -1,
         color: ''
       }
       this.commitIdToNodeMap.set(commit.id, node)
@@ -88,11 +81,8 @@ export class GraphData {
             commit: new Commit('', '', '', '', '', parentId, [], '', new Date(0), ''),
             chronologicalOrder: distantPast,
             topologicalOrder: distantPast,
-            neighborsToHighlight: [],
-            linksToHighlight: [],
+            // j: -1,
             colorGroup: -1,
-            firstChild: null,
-            firstParent: null,
             color: ''
           }
           this.commitIdToNodeMap.set(parentId, node)
