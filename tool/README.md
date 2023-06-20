@@ -1,8 +1,7 @@
 1. **Install GitPython:**
    The script requires the `gitpython` package, which also includes `gitdb` and `smmap` as dependencies. You can install `GitPython` using pip:
-
     ```bash
-    pip install gitpython
+    pip3 install gitpython
     ```
 
 2. **Download the Python script:**
@@ -34,3 +33,6 @@
    - For `gitvis.web.app`: Go to [gitvis.web.app](https://gitvis.web.app) and upload the `.json.gz` file at the bottom of the website.
 
    - For building from sources`gitvisionwebapp`: First, you need to clone and build `gitvisionwebapp` from its sources. Once done, rename the generated `.json.gz` file to `own.json.gz` and paste it into `gitvisionwebapp/public/repos`. Then, go to `localhost:<your_port>/own` in your web browser. Alternatively you can go to `localhost:port` and upload the `.json.gz` file at the bottom of the website.
+
+
+Caution: In some cases, it may be necessary to switch to WSL (Windows Subsystem for Linux) when using GitVision tool on Windows.
