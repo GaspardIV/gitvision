@@ -4,6 +4,7 @@
       :src="'https://github.com/' + props.url?.split('/')[3] + '.png'"
       width="50"
       height="50"
+      class="avatar"
       alt="repository logo"
     />
     <div class="details">
@@ -26,7 +27,7 @@
         </div>
       </div>
       {{ props.notes }} <br />
-      <a :href="props.url" target="_blank" rel="noopener">{{ props.url }}</a> <br />
+      <a :href="props.url" class="url" target="_blank" rel="noopener">{{ props.url }}</a> <br />
     </div>
     <!--  asas-->
   </div>
@@ -38,7 +39,19 @@
   display: flex;
   align-items: center;
 }
+@media (max-width: 420px) {
+  .avatar {
+    float: left;
+    margin-right: 1rem;
+  }
+  .item {
+    display: block;
+  }
+}
 
+.url {
+  word-break: break-all;
+}
 .details {
   flex: 1;
   margin-left: 1rem;

@@ -9,7 +9,7 @@ import { useGRepoStore } from "@/stores/gRepoStore";
 import { CommitsGraph } from "@/graph/CommitsGraph";
 import type { Entity } from "aframe";
 
-const numberOfCommits = ref(3000);
+const numberOfCommits = ref(5000);
 let currentCommitBegin = ref(0); // start at 3000
 
 const repo = useGRepoStore();
@@ -129,6 +129,7 @@ onMounted(() => {
   AFRAME.registerComponent("chunkloader", {
     tick: async function() {
       let x = this.el.object3D.position.x;
+      // console.log("x: " + this.el.object3D.position.x, "y: " + this.el.object3D.position.y, "z: " + this.el.object3D.position.z);
       if (x > (numberOfCommits.value) * 50 /*+ 1000 */&& repo.canLoadMoreCommits) {
         currentCommitBegin.value += numberOfCommits.value;
 
@@ -181,8 +182,10 @@ onUnmounted(() => {
 
     <a-entity id="rig"
               rotation="0 270 0"
-              movement-controls="camera: #camera; fly: true; speed: 200;"
-              position="25 0 25">
+              movement-controls="camera: #camera; fly: true; speed: 420;"
+              position="25 0 25"
+              chunkloader
+    >
       <a-entity cursor="rayOrigin: mouse; mouseCursorStylesEnabled: true;"
                 raycaster="objects: [forcegraph];"></a-entity>
       <a-entity laser-controls="hand: left"
@@ -194,8 +197,8 @@ onUnmounted(() => {
         id="camera"
         position="0 1.6 0"
         far="100000"
-        chunkloader
-        look-controls="pointerLockEnabled: true">
+        look-controls="pointerLockEnabled: true"
+      >
         <a-cursor color="green" opacity="0.5" raycaster="objects: [forcegraph]">
 <!--          <a-entity id="forcegraph-tooltip" position="0 -0.9 -1" htmlembed visible="false" >-->
 <!--            <div id="page" class="screen dark main">-->

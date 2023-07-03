@@ -4,11 +4,6 @@
   <div class="greetings">
     <h1 class="green">GitVision</h1>
     <h3>Immersive Visualization of Git Repositories</h3>
-    <p style="border: 1px solid purple; padding: 10px; border-radius: 5px">
-      Your participation in short
-      <a href="https://docs.google.com/forms/d/1bjKZ8hNTx1DVMMZ7PspAB_cJOv3KHcO18ki87c084uQ" target="_blank" rel="noopener">research survey</a> will
-      contribute significantly to my ongoing Master's Thesis research. I value your feedback! Thank you.
-    </p>
     <br />
     <p>
       GitVision is a web tool designed to visualize Git repositories in virtual, augmented, and 3D
