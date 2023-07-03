@@ -5,7 +5,7 @@ import sys
 from itertools import islice
 from typing import Dict, List
 
-import git # pip install gitpython # https://gitpython.readthedocs.io/en/stable/intro.html
+import git # pip3 install gitpython # https://gitpython.readthedocs.io/en/stable/intro.html
 
 
 # Used if no path is specified in the command line arguments
