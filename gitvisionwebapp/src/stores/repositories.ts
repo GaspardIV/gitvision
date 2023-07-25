@@ -23,7 +23,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'Feature Branch Workflow',
       notes:
         'This repo provides a great example of a large, complex open-source project with a very active community.',
-      numberOfChunks: 15
+      numberOfChunks: 16
     },
     {
       url: 'https://github.com/torvalds/linux',
@@ -33,7 +33,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'Unique',
       notes:
         'This repo provides an excellent perspective on how an extensive and long-standing project operates.',
-      numberOfChunks: 119
+      numberOfChunks: 121
     },
     {
       url: 'https://github.com/WordPress/WordPress',
@@ -43,7 +43,7 @@ export const useRepoStore = defineStore('repositories', () => {
       branchingStrategy: 'Gitflow Workflow',
       notes:
         'WordPress, one of the most widely used CMS platforms, follows the Gitflow workflow. The repo offers a look at a mature, widely-used open-source project.',
-      numberOfChunks: 5
+      numberOfChunks: 6
     },
     {
       url: 'https://github.com/jekyll/jekyll',
