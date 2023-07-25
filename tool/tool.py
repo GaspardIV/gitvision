@@ -60,7 +60,7 @@ def get_commits_json(repo: git.Repo, branch_id_to_branch_map: Dict, tag_id_to_ta
     Construct JSON objects for commits.
     """
     commits_json = []
-    for commit in repo.iter_commits():
+    for commit in repo.iter_commits('--all'):
         commit_json = {
             "summary": commit.summary,
             "committed_date": commit.committed_date,
@@ -111,6 +111,9 @@ def get_repo_json(repo: git.Repo) -> Dict:
     repo_json["branches"], branch_id_to_branch_map = get_tags_json(repo.branches)
     repo_json["tags"], tag_id_to_tag_map = get_tags_json(repo.tags)
     repo_json["commits"] = get_commits_json(repo, branch_id_to_branch_map, tag_id_to_tag_map)
+    print("Number of commits: ", len(repo_json["commits"]))
+    print("Number of branches: ", len(repo_json["branches"]))
+    print("Number of tags: ", len(repo_json["tags"]))
     add_date_order(repo_json)
     return repo_json
 
