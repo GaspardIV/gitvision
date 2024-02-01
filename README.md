@@ -27,6 +27,22 @@ Below visualization explanation on examples.
 ### tensorflow
 ![gitvis (3)](https://github.com/GaspardIV/gitvision/assets/30477366/2f6222dd-42e2-4451-b9be-5d1a3c347fe0)
 
+### Comparison - Leaflet example
+![gitvis (4)](https://github.com/GaspardIV/gitvision/assets/30477366/54b458e5-15ec-45be-805b-d8dcf97631d3)
+![gitvis (7)](https://github.com/GaspardIV/gitvision/assets/30477366/29a631b9-1419-4233-acd2-411df7d66d59)
+![gitvis (8)](https://github.com/GaspardIV/gitvision/assets/30477366/a4f5641e-4548-490e-90f7-3ddd41ddb6ba)
+![gitvis (9)](https://github.com/GaspardIV/gitvision/assets/30477366/6f5031ca-e291-42a5-84a6-33951d7e453d)
+![gitvis (10)](https://github.com/GaspardIV/gitvision/assets/30477366/09590aba-d595-4742-95c3-dea0865bdcae)
+![gitvis (11)](https://github.com/GaspardIV/gitvision/assets/30477366/3d46fb29-d848-4aec-89fa-12bdbc731ef1)
+![gitvis (12)](https://github.com/GaspardIV/gitvision/assets/30477366/0c1f4d24-a6ef-42fe-9062-289c4827429a)
+![gitvis (13)](https://github.com/GaspardIV/gitvision/assets/30477366/f7049f0e-316a-4133-9408-ab94c45ea96c)
+![gitvis (14)](https://github.com/GaspardIV/gitvision/assets/30477366/e0ac32f4-59e5-40c6-9ee4-651c071a7c9e)
+![gitvis (15)](https://github.com/GaspardIV/gitvision/assets/30477366/99ace93b-44ea-4c89-99ef-6ad42a7e5fdb)
+![gitvis (16)](https://github.com/GaspardIV/gitvision/assets/30477366/abcb3b21-a60e-4455-8827-e5be793c69be)
+![gitvis (17)](https://github.com/GaspardIV/gitvision/assets/30477366/f3b48bf1-c652-48be-ae19-cb17319ea305)
+![unnamed](https://github.com/GaspardIV/gitvision/assets/30477366/fb819351-43a4-45b4-b9b0-66daba7e7b3d)
+
+
 ## Visualize own repository
 You can generate visualization data from your own Git repositories using our Python script. For details, check the README.md in the [tools](https://github.com/GaspardIV/gitvision/blob/main/tool/README.md) directory.
 
