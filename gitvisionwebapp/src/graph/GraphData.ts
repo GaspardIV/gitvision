@@ -46,8 +46,6 @@ export class GraphData {
     GraphTraversal.colorLinks(this.commitIdToNodeMap, this.commitsLinks)
     GraphTraversal.calculateChronologicalOrder(this.commitIdToNodeMap)
     GraphTraversal.calculateTopologicalOrder(this.commitIdToNodeMap)
-    GraphTraversal.calculateTopologicalOrder2(this.commitIdToNodeMap)
-    // GraphTraversal.calculateJCurvedBranches(this.commitIdToNodeMap)
 
     return {
       nodes: this.commitNodes,

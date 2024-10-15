@@ -93,7 +93,6 @@ export class GraphTraversal {
   }
 
   static calculateTopologicalOrder(commitIdToNodeMap: Map<string, CommitNode>) {
-    // todo node'y ktore sa tymi samymi dziecmi niech maja ten sam topological order xd
     const visited = new Set<string>()
     const dfs = (id: string) => {
       const commitNode = commitIdToNodeMap.get(id)
@@ -101,8 +100,7 @@ export class GraphTraversal {
       const commit = commitNode.commit
       if (visited.has(commit.id)) return
       visited.add(commit.id)
-      // reverse parents order
-      for (let i = commit.parentsIds.length - 1; i >= 0; i--) {
+      for (let i = 0; i < commit.parentsIds.length; i++) {
         const parentId = commit.parentsIds[i]
         dfs(parentId)
       }
@@ -110,6 +108,7 @@ export class GraphTraversal {
     }
 
     for (const commitNode of commitIdToNodeMap.values()) {
+      if (visited.has(commitNode.id)) continue;
       dfs(commitNode.id)
     }
     const minTopologicalOrder = Array.from(commitIdToNodeMap.values()).reduce(
@@ -117,86 +116,9 @@ export class GraphTraversal {
       Infinity
     )
     for (const commitNode of commitIdToNodeMap.values()) {
-      if (minTopologicalOrder != Infinity) commitNode.topologicalOrder = commitNode.topologicalOrder - minTopologicalOrder
+      if (minTopologicalOrder != Infinity)
+        commitNode.topologicalOrder = commitNode.topologicalOrder - minTopologicalOrder
     }
-  }
-
-  // static calculateJCurvedBranches(commitIdToNodeMap: Map<string, CommitNode>) {
-  //   // Start with an empty list of active branches
-  //   let activeBranches = [];
-  //
-  //   // Create an array from the Map and sort it according to 'i' values
-  //   let sortedCommits = Array.from(commitIdToNodeMap.values()).sort((a, b) => a.chronologicalOrder - b.chronologicalOrder);
-  //
-  //   // Iterate over the sorted commits
-  //   for (let commitNode of sortedCommits) {
-  //     // Check if commit has parents
-  //     if (commitNode.commit.parentsIds) {
-  //       const branchChildren = commitNode.commit.parentsIds.filter(id => {
-  //         const parent = commitIdToNodeMap.get(id);
-  //         // Check if parent exists and has children
-  //         return parent && parent.parents && parent.parents[0] === commitNode.id;
-  //       });
-  //
-  //       if (branchChildren.length > 0) {
-  //         // Replace the first branch child in active branches with the current commit
-  //         const index = activeBranches.findIndex(id => id === branchChildren[0]);
-  //         if (index !== -1) {
-  //           activeBranches[index] = commitNode.id;
-  //         }
-  //       } else {
-  //         // If no branch children, insert the current commit into active branches
-  //         activeBranches.push(commitNode.id);
-  //       }
-  //
-  //       // Remove the remaining branch children from active branches
-  //       for (let childId of branchChildren.slice(1)) {
-  //         const index = activeBranches.findIndex(id => id === childId);
-  //         if (index !== -1) {
-  //           activeBranches.splice(index, 1);
-  //         }
-  //       }
-  //     } else {
-  //       // If commit has no parents, insert the current commit into active branches
-  //       activeBranches.push(commitNode.id);
-  //     }
-  //
-  //     // Set the j-coordinate to the index of the commit in active branches
-  //     commitNode.j = activeBranches.indexOf(commitNode.id);
-  //   }
-  // }
-
-
-
-
-  static calculateTopologicalOrder2(commitIdToNodeMap: Map<string, CommitNode>) {
-    // todo node'y ktore sa tymi samymi dziecmi niech maja ten sam topological order xd
-    const visited = new Set<string>()
-    const dfs = (id: string) => {
-      const commitNode = commitIdToNodeMap.get(id)
-      if (commitNode == undefined) return
-      const commit = commitNode.commit
-      if (visited.has(commit.id)) return
-      visited.add(commit.id)
-      // reverse parents order
-      for (let i = commit.parentsIds.length - 1; i >= 0; i--) {
-        const parentId = commit.parentsIds[i]
-        dfs(parentId)
-      }
-      commitNode.chronologicalOrder = visited.size
-    }
-
-    // for (const commitNode of commitIdToNodeMap.values()) {// reversed
-    for (const commitNode of Array.from(commitIdToNodeMap.values()).reverse()) {
-      dfs(commitNode.id)
-    }
-    // const minTopologicalOrder = Array.from(commitIdToNodeMap.values()).reduce(
-    //   (min, node) => Math.min(min, node.topologicalOrder),
-    //   Infinity
-    // )
-    // for (const commitNode of commitIdToNodeMap.values()) {
-    //   if (minTopologicalOrder != Infinity) commitNode.topologicalOrder = commitNode.topologicalOrder - minTopologicalOrder
-    // }
   }
 
   static calculateChronologicalOrder(commitIdToNodeMap: Map<string, CommitNode>) {
@@ -205,12 +127,10 @@ export class GraphTraversal {
       return a.commit.time.getTime() - b.commit.time.getTime()
     })
 
-    let order = 0;
+    let order = 0
     for (let i = 0; i < commitsNodes.length; i++) {
       commitsNodes[i].chronologicalOrder = order
-      if (i + 1 < commitsNodes.length && commitsNodes[i].commit.time.getTime() != commitsNodes[i + 1].commit.time.getTime()) {
-        order++
-      }
+      order++
     }
   }
 

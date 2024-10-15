@@ -126,41 +126,66 @@ onMounted(() => {
     }
   });
   if (AFRAME.components.chunkloader) delete AFRAME.components.chunkloader;
-  AFRAME.registerComponent("chunkloader", {
+  AFRAME.registerComponent('chunkloader', {
+    init: function() {
+
+      this.nextChunkPlane = document.createElement('a-plane');
+      this.nextChunkPlane.setAttribute('color', '#CCCCCC80');
+      this.nextChunkPlane.setAttribute('width', 1000);
+      this.nextChunkPlane.setAttribute('height', 1000);
+      this.nextChunkPlane.setAttribute('rotation', "0 270 0");
+      this.nextChunkPlane.setAttribute('text', {
+        value: '',
+        align: 'center',
+        color: '#000000'
+      });
+
+      this.el.sceneEl.appendChild(this.nextChunkPlane);
+      this.prevChunkPlane = document.createElement('a-plane');
+      this.prevChunkPlane.setAttribute('color', '#CCCCCC80');
+      this.prevChunkPlane.setAttribute('width', 1000);
+      this.prevChunkPlane.setAttribute('height', 1000);
+      this.prevChunkPlane.setAttribute('rotation', "0 90 0");
+      this.prevChunkPlane.setAttribute('text', {
+        value: '',
+        align: 'center',
+        color: '#000000'
+      });
+      this.el.sceneEl.appendChild(this.prevChunkPlane);
+    },
+
     tick: async function() {
       let x = this.el.object3D.position.x;
-      // console.log("x: " + this.el.object3D.position.x, "y: " + this.el.object3D.position.y, "z: " + this.el.object3D.position.z);
-      if (x > (numberOfCommits.value) * 50 /*+ 1000 */&& repo.canLoadMoreCommits) {
+
+      this.nextChunkPlane.setAttribute('text', 'value', `Pass to load next chunk\nCommits ${currentCommitBegin.value + numberOfCommits.value} - ${currentCommitBegin.value + 2 * numberOfCommits.value}`);
+      this.prevChunkPlane.setAttribute('text', 'value', `Pass to load previous chunk\nCommits ${Math.max(0, currentCommitBegin.value - numberOfCommits.value)} - ${currentCommitBegin.value}`);
+
+      let userPosition = this.el.object3D.position;
+      let userY = userPosition.y;
+      let userZ = userPosition.z;
+
+      this.nextChunkPlane.object3D.position.set(
+        (numberOfCommits.value) * 50,
+        userY,
+        userZ
+      );
+
+      this.prevChunkPlane.object3D.position.set(
+        0,
+        userY,
+        userZ
+      );
+
+      if (x > (numberOfCommits.value) * 50 && repo.canLoadMoreCommits) {
         currentCommitBegin.value += numberOfCommits.value;
-
-        this.el.object3D.position.x = 0;
-        this.el.object3D.position.y = 0;
-        await fillGraphData()
-        this.el.object3D.position.x = 0;
-      } else if (x < 0/*- 1000*/ && currentCommitBegin.value > 0) {
-        currentCommitBegin.value -= numberOfCommits.value;
-        currentCommitBegin.value = Math.max(0, currentCommitBegin.value);
-        await fillGraphData()
-        this.el.object3D.position.x = (/*currentCommitBegin.value +*/ numberOfCommits.value) * 50;
+        this.el.object3D.position.set(0, 0, 0);
+        await fillGraphData();
       }
-
-
-      /*
-
-            let x = this.el.object3D.position.x;
-      if (x > (numberOfCommits.value)/3*2 * 50 + 1000 && repo.canLoadMoreCommits) {
-        currentCommitBegin.value += Math.floor(numberOfCommits.value / 3);
-        this.el.object3D.position.x = numberOfCommits.value/3 * 50;
-        await fillGraphData()
-        this.el.object3D.position.x = numberOfCommits.value/3 * 50;
-      } else if (x < (numberOfCommits.value)/3 * 50 - 1000 && currentCommitBegin.value > 0) {
-        currentCommitBegin.value -= Math.floor(numberOfCommits.value / 3);
-        currentCommitBegin.value = Math.max(0, currentCommitBegin.value);
-        this.el.object3D.position.x = numberOfCommits.value/3*2 * 50;
-        await fillGraphData()
-        this.el.object3D.position.x = numberOfCommits.value/3*2 * 50;
+      else if (x < 0 && currentCommitBegin.value > 0) {
+        currentCommitBegin.value = Math.max(0, currentCommitBegin.value - numberOfCommits.value);
+        await fillGraphData();
+        this.el.object3D.position.x = numberOfCommits.value * 50;
       }
-       */
     }
   });
 });
