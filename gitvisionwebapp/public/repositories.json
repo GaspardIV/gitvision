@@ -1,6 +1,4 @@
-from os import system
-
-repositories = [
+[
   {
     "url": "https://github.com/tensorflow/tensorflow",
     "title": "TensorFlow",
@@ -8,6 +6,7 @@ repositories = [
     "size": "Large",
     "branchingStrategy": "Feature Branch Workflow",
     "notes": "This repo provides a great example of a large, complex open-source project with a very active community.",
+    "numberOfChunks": 16
   },
   {
     "url": "https://github.com/torvalds/linux",
@@ -16,6 +15,7 @@ repositories = [
     "size": "Large",
     "branchingStrategy": "Unique",
     "notes": "This repo provides an excellent perspective on how an extensive and long-standing project operates.",
+    "numberOfChunks": 121
   },
   {
     "url": "https://github.com/WordPress/WordPress",
@@ -24,6 +24,7 @@ repositories = [
     "size": "Large",
     "branchingStrategy": "Gitflow Workflow",
     "notes": "WordPress, one of the most widely used CMS platforms, follows the Gitflow workflow. The repo offers a look at a mature, widely-used open-source project.",
+    "numberOfChunks": 6
   },
   {
     "url": "https://github.com/jekyll/jekyll",
@@ -32,6 +33,7 @@ repositories = [
     "size": "Small",
     "branchingStrategy": "GitHub Flow",
     "notes": "Jekyll's repository is a good example of a small to medium-sized project following the GitHub Flow branching strategy.",
+    "numberOfChunks": 2
   },
   {
     "url": "https://github.com/pjreddie/darknet",
@@ -40,6 +42,7 @@ repositories = [
     "size": "Small",
     "branchingStrategy": "Feature Branch Workflow",
     "notes": "Darknet's repository showcases a small project with significant impact in the field of AI.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/cowsay-org/cowsay",
@@ -48,6 +51,7 @@ repositories = [
     "size": "Tiny",
     "branchingStrategy": "Long-Running Branches Workflow",
     "notes": "Cowsay is an iconic Unix program with an interesting commit history for its single purpose.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/expressjs/express",
@@ -56,6 +60,7 @@ repositories = [
     "size": "Medium",
     "branchingStrategy": "GitHub Flow",
     "notes": "One of the most popular Node.js frameworks. Great for exploring JavaScript backend patterns.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/typicode/json-server",
@@ -64,6 +69,7 @@ repositories = [
     "size": "Medium",
     "branchingStrategy": "-",
     "notes": "An interesting tool that simplifies frontend development by providing a quick backend for prototyping.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/koajs/koa",
@@ -72,6 +78,7 @@ repositories = [
     "size": "Medium",
     "branchingStrategy": "GitHub Flow",
     "notes": "An evolution of Express.js that introduces new patterns and utilities. Created by the original Express.js team.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/Microsoft/vscode-go",
@@ -80,6 +87,7 @@ repositories = [
     "size": "Medium",
     "branchingStrategy": "-",
     "notes": "One of the key components of the popular VS Code editor, demonstrating Microsoft's open source approach.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/axios/axios",
@@ -88,6 +96,7 @@ repositories = [
     "size": "Medium",
     "branchingStrategy": "-",
     "notes": "One of the most popular libraries for making HTTP requests in JavaScript. Great for exploring asynchronous JavaScript.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/hashicorp/vagrant",
@@ -96,6 +105,7 @@ repositories = [
     "size": "Medium",
     "branchingStrategy": "GitHub Flow",
     "notes": "A widely used tool in the software industry, great for understanding environment management in development.",
+    "numberOfChunks": 2
   },
   {
     "url": "https://github.com/Leaflet/Leaflet",
@@ -104,6 +114,7 @@ repositories = [
     "size": "Medium",
     "branchingStrategy": "-",
     "notes": "A leading open-source JavaScript library for mobile-friendly interactive maps, known for its simplicity, performance, and usability.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/piuccio/cowsay",
@@ -112,6 +123,7 @@ repositories = [
     "size": "Tiny",
     "branchingStrategy": "-",
     "notes": "A fun, legendary command-line program. Excellent for a light-hearted break.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/othiym23/async-listener",
@@ -120,6 +132,7 @@ repositories = [
     "size": "Tiny",
     "branchingStrategy": "-",
     "notes": "Interesting due to its impact on Node.js asynchronous programming.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/github/personal-website",
@@ -128,6 +141,7 @@ repositories = [
     "size": "Small",
     "branchingStrategy": "GitHub Flow",
     "notes": "A good example of GitHub's open source strategy and community engagement.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/airbnb/javascript",
@@ -136,6 +150,7 @@ repositories = [
     "size": "Small",
     "branchingStrategy": "-",
     "notes": "An extremely popular JavaScript style guide that's influenced JS development.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/MunGell/awesome-for-beginners",
@@ -144,6 +159,7 @@ repositories = [
     "size": "Small",
     "branchingStrategy": "-",
     "notes": "A community-driven project aimed to help beginners start with open-source.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/yaronn/GifW00t",
@@ -152,6 +168,7 @@ repositories = [
     "size": "Tiny",
     "branchingStrategy": "-",
     "notes": "An interesting tool developed as a pure JS solution.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/ptb/mac-setup",
@@ -160,6 +177,7 @@ repositories = [
     "size": "Small",
     "branchingStrategy": "GitHub Flow",
     "notes": "Useful guide showcasing community best practices.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/zricethezav/gitleaks",
@@ -168,6 +186,7 @@ repositories = [
     "size": "Small",
     "branchingStrategy": "GitHub Flow",
     "notes": "A security tool widely used in the industry to prevent committing sensitive information.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/schollz/howmanypeoplearearound",
@@ -176,6 +195,7 @@ repositories = [
     "size": "Tiny",
     "branchingStrategy": "-",
     "notes": "A unique tool that utilizes wifi signals in a fun way.",
+    "numberOfChunks": 1
   },
   {
     "url": "https://github.com/BurntSushi/ripgrep",
@@ -184,32 +204,6 @@ repositories = [
     "size": "Small",
     "branchingStrategy": "Feature Branch Workflow",
     "notes": "An efficient and fast searching tool, widely used and appreciated.",
+    "numberOfChunks": 1
   }
 ]
-
-from tool import main
-import json
-
-def writeRepositoriesFile():
-    with open('repositories.json', 'w') as f:
-        json.dump(repositories, f)
-
-if __name__ == '__main__':
-    for repo in repositories[::-1]:
-        # rm -rf linux.git
-        # git clone --bare --no-checkout --filter=blob:none https://github.com/torvalds/linux.git linux.git
-        # main(repo.url.split('/')[-1])
-        # rm -rf linux.git
-        print("Cloning", repo.get('url'))
-        system(f"git clone --bare --no-checkout --filter=blob:none {repo.get('url')} {repo.get('url').split('/')[-1]}")
-        sizeOfRepoBeforeGzip = system(f"du -sh {repo.get('url').split('/')[-1]} | cut -f1")
-        print("Size of repo before gzip", sizeOfRepoBeforeGzip)
-        main(repo.get('url').split('/')[-1])
-        repositories[repo]['numberOfChunks'] = main(repo.get('url').split('/')[-1], True) - 1
-        sizeOfRepoAfterGzip = system(f"du -sh {repo.get('url').split('/')[-1]} | cut -f1")
-        print("Size of repo after gzip", sizeOfRepoAfterGzip)
-        system(f"rm -rf {repo.get('url').split('/')[-1]}")
-        print("Done")
-    writeRepositoriesFile()
-
-

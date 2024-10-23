@@ -166,8 +166,8 @@ export const useGRepoStore = defineStore('grepo', () => {
     readOwnRepoFromUpload,
     getCommitsForViewFrame,
     hasLoadedCommits,
-    canLoadMoreCommits: computed(() => {
-      return actualChunk.value > 0
-    })
+    canLoadMoreCommits: (start) => {
+      return actualChunk.value > 0 || start < commits.value.length
+    }
   }
 })

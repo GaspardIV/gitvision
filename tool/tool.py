@@ -119,6 +119,10 @@ def get_repo_json(repo: git.Repo) -> Dict:
 
 
 def write_chunked(repo_path, repo_json, CHUNK_SIZE=10000):
+    """
+    Returns:
+     Number: number of chunks.
+    """
     branches_and_tags_json = {
         "branches": repo_json["branches"],
         "tags": repo_json["tags"]
@@ -135,13 +139,19 @@ def write_chunked(repo_path, repo_json, CHUNK_SIZE=10000):
     for i, chunk in enumerate(commit_chunks):
         commits_json_path = f'{repo_path}_commits_{i + 1}.json.gz'
         write_gzip_file(commits_json_path, chunk)
+    return len(commit_chunks)
 
 
 def write_output(repo_path, repo_json, chunked=False):
+    """
+    Returns:
+        Number: number of files created.
+    """
     if chunked:
-        write_chunked(repo_path, repo_json)
+        return write_chunked(repo_path, repo_json) + 1
     else:
         write_gzip_file(repo_path + '.json.gz', repo_json)
+        return 1
 
 
 def main(repo_path: str, chunked=False):
@@ -150,6 +160,7 @@ def main(repo_path: str, chunked=False):
 
     Args:
         repo_path (str): The path to the git repository.
+
     """
     repo = git.Repo(repo_path)
     repo_json = get_repo_json(repo)
