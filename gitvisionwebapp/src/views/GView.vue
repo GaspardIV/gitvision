@@ -134,8 +134,8 @@ onMounted(() => {
     },
   });
 
-  if (AFRAME.components.foo) delete AFRAME.components.foo;
-  AFRAME.registerComponent("foo", {
+  if (AFRAME.components.graphloader) delete AFRAME.components.graphloader;
+  AFRAME.registerComponent("graphloader", {
     init() {
       commitsGraph.setup(this.el.components.forcegraph.forceGraph);
       if (repo.hasLoadedCommits) {
@@ -170,7 +170,7 @@ onMounted(() => {
 watch([repo.hasLoadedCommits], fillGraphData);
 // onUpdated(fillGraphData);
 onUnmounted(() => {
-  delete AFRAME.components.foo;
+  delete AFRAME.components.graphloader;
   delete AFRAME.components.tag;
   delete AFRAME.components.branch;
   delete AFRAME.components.frameloader;
@@ -256,7 +256,7 @@ onUnmounted(() => {
         </a-cursor>
       </a-camera>
     </a-entity>
-    <a-entity forcegraph="on-node-hover: hoverNode" foo></a-entity>
+    <a-entity forcegraph="on-node-hover: hoverNode" graphloader></a-entity>
     <div id="enter-ar" hidden></div>
     <div id="enter-vr" hidden></div>
   </a-scene>
