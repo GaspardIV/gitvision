@@ -137,6 +137,7 @@ onMounted(() => {
   if (AFRAME.components.graphloader) delete AFRAME.components.graphloader;
   AFRAME.registerComponent("graphloader", {
     init() {
+      // @ts-ignore
       commitsGraph.setup(this.el.components.forcegraph.forceGraph);
       if (repo.hasLoadedCommits) {
         fillGraphData();
